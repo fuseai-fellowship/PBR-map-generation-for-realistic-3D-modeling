@@ -70,6 +70,25 @@ app.get("/api/threeD",(req,res)=>{
   // .json({hi:'hello'})
 })
 
+app.get("/api/ply",(req,res)=>{
+  res.set("Content-Type","application/zip")
+
+  const archive = archiver("zip",{zlib:{level:9}})
+
+  archive.on("error",(e)=>{
+    console.log("An error has occured in ply file")
+  })
+  archive.pipe(res)
+
+  const plyPath= path.join("axle shaft","Axle shaft.ply");
+
+  archive.file(plyPath,{name:'model.ply'})
+
+  console.log("this is done")
+  archive.finalize();
+})
+
+
 app.listen(4004, () => {
   console.log("Server running");
 });
