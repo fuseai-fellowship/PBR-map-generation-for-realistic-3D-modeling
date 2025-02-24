@@ -37,7 +37,7 @@ app.post("/api/upload",upload.single('image'),(req,res)=>{
   return res.send(req.file.buffer)
 })
 
-app.get("/api/threeD",(req,res)=>{
+app.get("/api/obj",(req,res)=>{
   res.set('Content-Type','application/zip')
 
 

@@ -2,6 +2,8 @@ import React from 'react'
 import { useLoader } from '@react-three/fiber'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader.js';
+import * as THREE from 'three';
 
 
 function Model({ objPath, mtlPath, ...props }) {
@@ -17,4 +19,16 @@ function Model({ objPath, mtlPath, ...props }) {
   return <primitive object={object} {...props} />
 }
 
-export default Model
+function PlyModel({plyPath,...props}){
+  console.log("ply file path",plyPath)
+
+  const geometry=useLoader(PLYLoader,plyPath)
+
+  geometry.computeVertexNormals();
+
+  const material = new THREE.MeshStandardMaterial({ color: 'orange' });
+    // const material = new THREE.MeshStandardMaterial({ vertexColors: true });
+
+  return <mesh geometry={geometry} material={material} {...props} />;
+}
+export {Model,PlyModel}

@@ -1,19 +1,23 @@
-import React, { useRef, useState, Suspense} from 'react';
+import React, { useRef, useState, Suspense, use} from 'react';
 import { MdOutlineFileUpload } from "react-icons/md";
 import { FiImage } from 'react-icons/fi'; 
 import axios from 'axios';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import Model from './Model';
+import {Model,PlyModel} from './Model';
 import JSZip from 'jszip';
 
 function DnN() {
   const [enlarge, setEnlarge] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [responseImage, setResponseImage] = useState(true);
+  const [responseImage, setResponseImage] = useState(null);
+
   const [objUrl,setObjURL]=useState(null);
   const [mtlUrl,setMtlURL]=useState(null);
+  const [plyUrl,setPlyUrl]=useState(null);
+
   const [objReceived,setObjReceived]=useState(null);
+  const [plyReceived,setPlyReceived]=useState(null)
   const fileInputRef = useRef(null);
 
 
@@ -42,6 +46,7 @@ function DnN() {
     if (!selectedImage) return;
     const formData = new FormData();
     formData.append('image', selectedImage);
+
     try {
       const response = await axios.post('http://localhost:4004/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -50,16 +55,35 @@ function DnN() {
       const imageUrl = URL.createObjectURL(response.data);
       // setResponseImage(imageUrl);
     } catch (error) {
-      console.error('Error uploading image:\n', error);
+      console.error('Error uploading image:', error);
     } 
 
     try {
-        const anotherResponse = await axios.get('http://localhost:4004/api/threeD',{
+      const response = await axios.get('http://localhost:4004/api/ply',{
+      responseType:'blob'
+      });
+
+      const zip = await JSZip.loadAsync(response.data)
+      const plyFile=zip.file("model.ply");
+
+      if( plyFile){
+        const plyBlob=await plyFile.async('blob')
+
+        const plyurl= URL.createObjectURL(plyBlob)
+        setPlyUrl(plyurl)
+        if(plyurl){setPlyReceived(true)}
+      }
+    } catch (error) {
+      console.log("Error occured while receiving ply object:",error)
+    }
+
+    try {
+        const response = await axios.get('http://localhost:4004/api/obj',{
             responseType:'blob'
         });
 
-        const zip= await JSZip.loadAsync(anotherResponse.data)
-        console.log("zip has png : ", zip.file('model.obj'))
+        const zip= await JSZip.loadAsync(response.data)
+        console.log("Zip file for obj is received")
 
         const objFile = zip.file("model.obj");
         const mtlFile = zip.file("model.mtl");
@@ -68,7 +92,6 @@ function DnN() {
 
 
         if ( objFile && mtlFile){
-            console.log("hi")
             const objBlob= await objFile.async("blob");
             const mtlBlob= await mtlFile.async("blob");
             const normalImage= await normalFile.async("blob")
@@ -77,24 +100,14 @@ function DnN() {
 
             const objurl= URL.createObjectURL(objBlob)
             const mtlurl=URL.createObjectURL(mtlBlob)
+            const normalurl=URL.createObjectURL(normalImage)
+            setResponseImage(normalurl)
             setObjURL(objurl)
             setMtlURL(mtlurl)
             console.log("Obj url is  ",objurl)
 
             if(objurl && mtlurl){setObjReceived(true)}
-
-            // const url=URL.createObjectURL(normalImage);
-            // setResponseImage(url);
-            // const a = document.createElement('a');
-            // a.style.display = 'none';
-            // a.href = url;
-            // a.download = "cottage_normal.png";
-            // document.body.appendChild(a);
-            // a.click();
-            // URL.revokeObjectURL(url);
-            // console.log("hello it is ")
         }
-
         // Download the received zip file in the device
 
         // const objUrl=URL.createObjectURL(anotherResponse.data)
@@ -108,7 +121,7 @@ function DnN() {
         // console.log('another res =', objUrl)
 
     } catch (error) {
-        console.log("Error occured in object ",error)
+        console.log("Error occured in object: ",error)
     } 
   };
 
@@ -204,9 +217,9 @@ function DnN() {
         <div className='relative p-4'>
           <div className='flex justify-evenly mt-12 mb-20'>
             {/* Depth Map Container */}
-            <div className='w-1/3 hover:scale-105 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl border-2 bg-slate-200'>
+            <div className='w-1/3  transition-all duration-60 mt-4 hover:shadow-lg rounded-xl border-2 bg-slate-200'>
               <div>
-                {responseImage ? (
+                {responseImage !=null? (
                   <img 
                     className='rounded-tr-xl rounded-tl-xl w-full h-60 object-cover'
                     src={responseImage}
@@ -224,7 +237,7 @@ function DnN() {
             </div>
 
             {/* Depth Point Cloud Container */}
-            <div className='w-1/3 hover:scale-105 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl border-2 bg-slate-200'>
+            <div className='w-1/3  transition-all duration-60 mt-4 hover:shadow-lg rounded-xl border-2 bg-slate-200'>
               <div>
                 <img 
                   className='rounded-tr-lg rounded-tl-lg w-full h-60 object-cover'
@@ -240,22 +253,28 @@ function DnN() {
 
           <div className='flex justify-evenly mt-12 mb-20'>
             {/* Normal Map Container (with 3D model) */}
-            <div className='w-1/3 hover:scale-105 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl border-2 bg-slate-200 relative'>
+            <div className='w-1/3 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl border-2 bg-slate-200 relative'>
               {/* Small (default) 3D model container */}
               <div className="bg-blue-200 rounded-xl h-60">
-                {objReceived &&
+                {plyReceived &&
                 <Canvas className="w-full h-full"  camera={{ position: [0, 2, 40] }}>
-                  <ambientLight intensity={2} />
-                  <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-                  <pointLight position={[-10, -10, -10]} />
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[10, 10, 10]} intensity={2} />
+                  {/* <pointLight position={[-10, -10, -10]} /> */}
                   <Suspense fallback={null}>
-                    <Model 
+                    {/* <Model 
                         objPath={objUrl}
                         mtlPath={mtlUrl}
                       // objPath="/src/Components/assets/resource/cottage/cottage_obj.obj" 
                       // mtlPath="/src/Components/assets/resource/cottage/cottage_obj.mtl" 
                       position={[0, 0, 10]}
                       scale={[1, 1, 1]}
+                    /> */}
+
+                    <PlyModel
+                    plyPath={plyUrl}
+                    position={[0, 0, 10]}
+                    scale={[1, 1, 1]}
                     />
                     <Box />
                   </Suspense>
@@ -274,24 +293,30 @@ function DnN() {
 
               {/* Overlay: Enlarged 3D model container */}
               {enlarge && (
-                <div className="absolute inset-y-0 flex justify-center items-center z-10 bg-red-300">
+                <div className="absolute inset-y-10 -top-3/4 flex justify-center items-center z-10">
                   <div className="bg-blue-200 relative w-[70vw] h-[30vw] rounded-xl">
                     <button 
                       onClick={() => setEnlarge(false)}
-                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full z-20"
+                      className="absolute top-2 right-2 bg-red-500 text-white px-2 rounded-full z-20"
                     >
                       X
                     </button>
                     <Canvas className="w-full h-full" camera={{ position: [0, 2, 40] }}>
-                      <ambientLight intensity={2} />
-                      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-                      <pointLight position={[-10, -10, -10]} />
+                      <ambientLight intensity={0.5} />
+                      <directionalLight position={[10, 10, 10]} intensity={2} />
+                      {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
+                      {/* <pointLight position={[-10, -10, -10]} /> */}
                       <Suspense fallback={null}>
-                        <Model 
+                        {/* <Model 
                           objPath="/src/Components/assets/resource/cottage/cottage_obj.obj" 
                           mtlPath="/src/Components/assets/resource/cottage/cottage_obj.mtl" 
                           position={[0, 0, 0]}
                           scale={[1, 1, 1]}
+                        /> */}
+                        <PlyModel
+                            plyPath={plyUrl}
+                            position={[0, 0, 0]}
+                            scale={[1, 1, 1]}
                         />
                         <Box />
                       </Suspense>
@@ -303,7 +328,7 @@ function DnN() {
             </div>
 
             {/* Normal Point Cloud Container */}
-            <div className='w-1/3 hover:scale-105 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl border-2 bg-slate-200'>
+            <div className='w-1/3 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl border-2 bg-slate-200'>
               <div>
                 <img 
                   className='rounded-tr-lg rounded-tl-lg w-full h-60 object-cover'
