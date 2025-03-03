@@ -3,12 +3,19 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import butterfly1 from "./assets/butterfly1.png"
 import { FiImage } from 'react-icons/fi'; 
 import axios from 'axios';
+import JSZip from 'jszip';
 
 
 
 function PBR() {
     const [selectedImage, setSelectedImage] = useState(null); // for uploaded imaged
     const [responseImage, setResponseImage] = useState(null);  // for received image
+
+    const [roughness,setRough]=useState(null)
+    const [ambient,setAmb]=useState(null)
+    const [depth,setDpt]=useState(null)
+    const [normal,setNorm]=useState(null)
+
     const fileInputRef = useRef(null);
   
     // When a file is selected via the hidden input
@@ -50,18 +57,52 @@ function PBR() {
         const formData = new FormData();
         formData.append('image', selectedImage);
     
-        try {
-            console.log("trying....")
-            const response = await axios.post('http://localhost:4004/api/upload', formData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-            responseType: 'blob'
-            });
+        // try {
+        //     console.log("trying....")
+        //     const response = await axios.post('http://localhost:4004/api/upload', formData, {
+        //     headers: { 'Content-Type': 'multipart/form-data' },
+        //     responseType: 'blob'
+        //     });
 
-            const imageUrl = URL.createObjectURL(response.data);
-            console.log("Completed....",response)
-            setResponseImage(imageUrl);
+        //     const imageUrl = URL.createObjectURL(response.data);
+        //     console.log("Completed....",response)
+        //     setResponseImage(imageUrl);
+        // } catch (error) {
+        //     console.error('Error uploading image:\n', error);
+        // }
+
+        try {
+            console.log("hello ji")
+            const response = await axios.post('https://b9af-35-197-18-72.ngrok-free.app/process',formData,{
+                headers: { 'Content-Type': 'multipart/form-data' },
+                responseType:'blob'
+                });
+          
+                const zip = await JSZip.loadAsync(response.data)
+                console.log(zip)
+                const rough=zip.file("roughness.png");
+                const amb=zip.file("ambient_occlusion.png");
+                const norm=zip.file("normal_map.png");
+                const depth=zip.file("depth.png");
+          
+                if( zip){
+                  const roughBlob=await rough.async('blob')
+                  const ambBlob=await amb.async('blob')
+                  const normBlob=await norm.async('blob')
+                  const depthBlob=await depth.async('blob')
+          
+                  const roughUrl= URL.createObjectURL(roughBlob)
+                  const ambUrl= URL.createObjectURL(ambBlob)
+                  const normUrl= URL.createObjectURL(normBlob)
+                  const depthUrl= URL.createObjectURL(depthBlob)
+                  setAmb(ambUrl)
+                  setNorm(normUrl)
+                  setDpt(depthUrl)
+                  setRough(roughUrl)
+                }
+            
         } catch (error) {
-            console.error('Error uploading image:\n', error);
+         console.log("error",error)   
         }
       };
 
@@ -175,48 +216,96 @@ function PBR() {
 
                 <div className={`  hover:scale-105 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl border-2 bg-slate-200 w-60`}>
                     
-                    <div className=''>
-                        <img className='rounded-tr-xl rounded-tl-xl  w-full h-60 object-cover' src={butterfly1}/>
+                <div className='relative'>
+                        {ambient  ? (
+                        <img 
+                            className='rounded-tr-xl rounded-tl-xl w-full h-60 object-cover'
+                            src={ambient}
+                            alt="Content preview"
+                        />
+                            ) 
+                            : (
+                                <div className='w-full h-60 flex items-center justify-center bg-white'>
+                                    <FiImage className='w-16 h-16 text-gray-500' />
+                                </div>
+                            )
+                            }
                     </div>
 
                     <div className='flex w-5/6 text-left mx-2 my-2'>
-                        <p className='w-full text-lg'> PBR map 2</p>
+                        <p className='w-full text-lg'> Ambient</p>
                     </div>
     
                 </div>
 
                 <div className='w-60 hover:scale-105 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl relative border-2 bg-slate-200'>
                     
-                    <div className='relative'>
-                        <img className='rounded-tr-xl rounded-tl-xl  w-full h-60 object-cover' src={butterfly1}/>
+                <div className='relative'>
+                        {roughness  ? (
+                        <img 
+                            className='rounded-tr-xl rounded-tl-xl w-full h-60 object-cover'
+                            src={roughness}
+                            alt="Content preview"
+                        />
+                            ) 
+                            : (
+                                <div className='w-full h-60 flex items-center justify-center bg-white'>
+                                    <FiImage className='w-16 h-16 text-gray-500' />
+                                </div>
+                            )
+                            }
                     </div>
 
                     <div className='flex w-5/6 text-left mx-2 my-2'>
-                        <p className='w-full  text-lg'>  PBR map 3</p>
+                        <p className='w-full  text-lg'>  Roughness</p>
                     </div>
     
                 </div>
 
                 <div className='w-60 hover:scale-105 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl  border-2 bg-slate-200'>
                     
-                    <div className=''>
-                        <img className='rounded-tr-xl rounded-tl-xl  w-full h-60 object-cover' src={butterfly1}/>
+                <div className='relative'>
+                        {depth  ? (
+                        <img 
+                            className='rounded-tr-xl rounded-tl-xl w-full h-60 object-cover'
+                            src={original}
+                            alt="Content preview"
+                        />
+                            ) 
+                            : (
+                                <div className='w-full h-60 flex items-center justify-center bg-white'>
+                                    <FiImage className='w-16 h-16 text-gray-500' />
+                                </div>
+                            )
+                            }
                     </div>
 
                     <div className='flex w-5/6 text-left mx-2 my-2'>
-                        <p className='w-full  text-lg'>  PBR map 4</p>
+                        <p className='w-full  text-lg'>  Original</p>
                     </div>
     
                 </div>
 
                 <div className='w-60 hover:scale-105 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl relative border-2 bg-slate-200'>
                     
-                    <div className='relative'>
-                        <img className='rounded-tr-lg rounded-tl-lg  w-full h-60 object-cover ' src={"https://images.pexels.com/photos/2071882/pexels-photo-2071882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"}/>
+                <div className='relative'>
+                        {normal  ? (
+                        <img 
+                            className='rounded-tr-xl rounded-tl-xl w-full h-60 object-cover'
+                            src={normal}
+                            alt="Content preview"
+                        />
+                            ) 
+                            : (
+                                <div className='w-full h-60 flex items-center justify-center bg-white'>
+                                    <FiImage className='w-16 h-16 text-gray-500' />
+                                </div>
+                            )
+                            }
                     </div>
 
                     <div className='flex w-5/6 text-left mx-2 my-2'>
-                        <p className='w-full text-lg'>  PBR map 5</p>
+                        <p className='w-full text-lg'>  normal</p>
                     </div>
     
                 </div>
