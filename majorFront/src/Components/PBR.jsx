@@ -4,17 +4,20 @@ import butterfly1 from "./assets/butterfly1.png"
 import { FiImage } from 'react-icons/fi'; 
 import axios from 'axios';
 import JSZip from 'jszip';
+import backendAPI from '../constant.js';
 
 
 
 function PBR() {
     const [selectedImage, setSelectedImage] = useState(null); // for uploaded imaged
-    const [responseImage, setResponseImage] = useState(null);  // for received image
+    // const [responseImage, setResponseImage] = useState(null);  // for received image
 
     const [roughness,setRough]=useState(null)
     const [ambient,setAmb]=useState(null)
     const [depth,setDpt]=useState(null)
     const [normal,setNorm]=useState(null)
+    const [original,setOrg]=useState(null)
+
 
     const fileInputRef = useRef(null);
   
@@ -73,7 +76,7 @@ function PBR() {
 
         try {
             console.log("hello ji")
-            const response = await axios.post('https://b9af-35-197-18-72.ngrok-free.app/process',formData,{
+            const response = await axios.post(backendAPI,formData,{
                 headers: { 'Content-Type': 'multipart/form-data' },
                 responseType:'blob'
                 });
@@ -84,21 +87,26 @@ function PBR() {
                 const amb=zip.file("ambient_occlusion.png");
                 const norm=zip.file("normal_map.png");
                 const depth=zip.file("depth.png");
+                const original=zip.file("original_image.png")
           
                 if( zip){
                   const roughBlob=await rough.async('blob')
                   const ambBlob=await amb.async('blob')
                   const normBlob=await norm.async('blob')
                   const depthBlob=await depth.async('blob')
+                  const originalBlob=await original.async('blob')
           
                   const roughUrl= URL.createObjectURL(roughBlob)
                   const ambUrl= URL.createObjectURL(ambBlob)
                   const normUrl= URL.createObjectURL(normBlob)
                   const depthUrl= URL.createObjectURL(depthBlob)
+                  const orgUrl= URL.createObjectURL(originalBlob)
+
                   setAmb(ambUrl)
                   setNorm(normUrl)
                   setDpt(depthUrl)
                   setRough(roughUrl)
+                  setOrg(orgUrl)
                 }
             
         } catch (error) {
@@ -155,7 +163,7 @@ function PBR() {
                     Image selected!
                     <br />
                     <button className='mt-2 px-4 py-2 bg-blue-500 text-white rounded'>
-                        Upload Image
+                        Change Image
                     </button>
                     </div>
                 </div>
@@ -193,10 +201,10 @@ function PBR() {
                 <div className='w-60 hover:scale-105 transition-all duration-60 mt-4 hover:shadow-lg rounded-xl relative border-2 bg-slate-200'>
                     
                     <div className='relative'>
-                        {responseImage  ? (
+                        {original  ? (
                         <img 
                             className='rounded-tr-xl rounded-tl-xl w-full h-60 object-cover'
-                            src={responseImage}
+                            src={URL.createObjectURL(selectedImage)}
                             alt="Content preview"
                         />
                             ) 
@@ -209,7 +217,7 @@ function PBR() {
                     </div>
 
                     <div className='flex w-5/6 text-left mx-2 my-2'>
-                        <p className='w-full  text-lg'> PBR map 1</p>
+                        <p className='w-full  text-lg'> Original image</p>
                     </div>
     
                 </div>
@@ -268,7 +276,7 @@ function PBR() {
                         {depth  ? (
                         <img 
                             className='rounded-tr-xl rounded-tl-xl w-full h-60 object-cover'
-                            src={original}
+                            src={depth}
                             alt="Content preview"
                         />
                             ) 

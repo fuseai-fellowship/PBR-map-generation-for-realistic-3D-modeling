@@ -80,7 +80,8 @@ app.get("/api/ply",(req,res)=>{
   })
   archive.pipe(res)
 
-  const plyPath= path.join("axle shaft","Axle shaft.ply");
+  // const plyPath= path.join("axle shaft","Axle shaft.ply");
+  const plyPath= path.join("samples","open (2).ply");
 
   archive.file(plyPath,{name:'model.ply'})
 
