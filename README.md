@@ -30,6 +30,7 @@ git clone https://github.com/Kingyakstha/MajorProject.git
 cd MajorProject
 ```
 ### Backend Setup
+It is a demo backend for testing purposes.
 Navigate to the backend folder:
 ```bash
 cd backend
