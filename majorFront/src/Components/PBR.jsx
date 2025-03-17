@@ -1,14 +1,14 @@
 import React, { useRef, useState ,useEffect} from 'react';
 import { MdOutlineFileUpload } from "react-icons/md";
-import butterfly1 from "./assets/butterfly1.png"
 import { FiImage } from 'react-icons/fi'; 
 import axios from 'axios';
 import JSZip from 'jszip';
-import backendAPI from '../constant.js';
-
-
+import { useSelector } from 'react-redux';
 
 function PBR() {
+    const backendAPI=useSelector(state=>state.backendAPI)
+    console.log("In pbr maps displaying page with backendapi : ",backendAPI)
+
     const [selectedImage, setSelectedImage] = useState(null); // for uploaded imaged
     // const [responseImage, setResponseImage] = useState(null);  // for received image
 

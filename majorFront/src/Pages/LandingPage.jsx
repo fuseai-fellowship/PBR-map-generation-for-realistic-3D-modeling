@@ -1,11 +1,24 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {Link} from "react-router-dom"
 import butterfly1 from '../Components/Assets/butterfly1.png'
 import butterfly from '../Components/Assets/butterfly.jpg'
 
+import {useDispatch} from "react-redux"
+import {login} from '../Context/backendapi.js'
 
 
 function LandingPage() {
+        const [clicked, setclick]= useState(false)
+        const [backapi,setbackapi]=useState('')
+        const dispatch=useDispatch();
+         const addapi=(e)=>{
+            e.preventDefault()
+            console.log("the value is ",backapi)
+            dispatch(login(backapi))
+            setbackapi('')
+            setclick(!clicked)
+         }
+
   return (
     <div className='flex flex-col  w-screen h-screen '>
 
@@ -13,7 +26,21 @@ function LandingPage() {
 
             <div className='m-4 w-3/5 h-auto  px-8 py-36 '>
                 <p className='text-4xl leading-14 font-extrabold tracking-wide'>   Transform Any Image into High-Quality PBR Textures</p>
-                <p className='mt-24 mb-6 underline'> Try it now</p>
+                <p className='mt-24 mb-6 underline cursor-pointer select-none' onClick={()=>setclick(!clicked)}> Try it now 
+                 </p>
+                 {clicked &&  <form onSubmit={addapi}>
+                            <input
+                                type='text'
+                                value={backapi}
+                                onChange={(e)=>setbackapi(e.target.value)}
+                                className='border-2 rounded-lg px-2'
+                                >
+                                </input>
+                                <button type='submit' className='ml-4 cursor-pointer text-white bg-black px-1 rounded-lg' >
+                                    ADD
+                                </button>
+                            </form>
+                }
                 <Link to="/pbr">
                 <p className='w-56 mt-2 text-center py-2 px-10 rounded-sm bg-black text-white '> Extract PBR </p>
                 </Link>
@@ -27,7 +54,6 @@ function LandingPage() {
             </div>
          
         </div>
-      
 
         <div className='flex flex-col px-20 justify-between'>
             <p className='font-bold ml-5 text-2xl'>Discover Popular PBR images</p>

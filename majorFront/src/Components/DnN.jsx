@@ -5,10 +5,14 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import {Model,PlyModel} from './Model';
 import JSZip from 'jszip';
-import backendAPI from "../constant.js"
 import { FaFileAlt } from "react-icons/fa";
+import { useSelector } from 'react-redux';
+
 
 function DnN() {
+  const backendAPI=useSelector(state=>state.backendAPI)
+  console.log("In ply viewing page with backend api : ",backendAPI)
+
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [objUrl,setObjURL]=useState(null);

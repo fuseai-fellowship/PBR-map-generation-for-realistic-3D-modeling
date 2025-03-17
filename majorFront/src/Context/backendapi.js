@@ -1,0 +1,22 @@
+import {createSlice} from '@reduxjs/toolkit'
+
+
+const initialState={
+    status:false,
+    backendAPI:null
+}
+
+export const apiSlice= createSlice({
+    name:'api',
+    initialState,
+    reducers:{
+        login:(state,action)=>{
+            state.status=true,
+            state.backendAPI=action.payload
+        }
+    }
+
+})
+export const {login}=apiSlice.actions;
+
+export default apiSlice.reducer
