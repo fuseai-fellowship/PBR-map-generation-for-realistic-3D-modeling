@@ -1,6 +1,5 @@
 
 import React,{useState} from 'react'
-import pinterest_icon from '../Components/Assets/pinterest_icon.png'
 import { GiHamburgerMenu } from "react-icons/gi";
 import {Link} from 'react-router-dom'
 
@@ -17,7 +16,7 @@ function Navbar() {
             Mapper
         </div>
         <div  className='flex text-5xl text-[#2F2E0C] font-extrabold md:hidden gap-x-10'>
-        <GiHamburgerMenu className=' p-2 bg-white rounded-xl' src={pinterest_icon}  onClick={toggleSidebar} />
+        <GiHamburgerMenu className=' p-2 bg-white rounded-xl'  onClick={toggleSidebar} />
         {isSidebarVisible && 
             <ul className=' fixed top-20 left-0 h-44 w-56  text-[#2F2E0C] bg-white text-xl cursor-pointer gap-y-4 flex flex-col pl-3 pt-5 border-2 border-amber-50'>
             <li>
