@@ -120,13 +120,14 @@ function PBR() {
                     }
                     else setDpt(butterfly)
 
-                    const original=zip.file("original_image.png")
-                    if ( original){
-                        const originalBlob=await original.async('blob')
-                        const orgUrl= URL.createObjectURL(originalBlob)
-                        setOrg(orgUrl)
-                    }
-                    else setOrg(selectedImage)
+                    // const original=zip.file("original_image.png")
+                    // if ( original){
+                    //     const originalBlob=await original.async('blob')
+                    //     const orgUrl= URL.createObjectURL(originalBlob)
+                    //     setOrg(orgUrl)
+                    // }
+                    // else
+                     setOrg(selectedImage)
                
                 }
             

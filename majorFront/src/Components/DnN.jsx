@@ -73,34 +73,34 @@ function DnN() {
       console.log("Error occured while receiving ply object:",error)
     }
 
-    try {
-      //Receive and view 3D object of .obj file format
-        const response = await axios.get('http://localhost:4004/api/obj',{
-            responseType:'blob'
-        });
+    // try {
+    //   //Receive and view 3D object of .obj file format
+    //     const response = await axios.get('http://localhost:4004/api/obj',{
+    //         responseType:'blob'
+    //     });
 
-        const zip= await JSZip.loadAsync(response.data)
-        console.log("Zip file for obj is received")
+    //     const zip= await JSZip.loadAsync(response.data)
+    //     console.log("Zip file for obj is received")
 
-        const objFile = zip.file("model.obj");
-        const mtlFile = zip.file("model.mtl");
+    //     const objFile = zip.file("model.obj");
+    //     const mtlFile = zip.file("model.mtl");
 
-        if ( objFile && mtlFile){
-            const objBlob= await objFile.async("blob");
-            const mtlBlob= await mtlFile.async("blob");
+    //     if ( objFile && mtlFile){
+    //         const objBlob= await objFile.async("blob");
+    //         const mtlBlob= await mtlFile.async("blob");
 
-            const objurl= URL.createObjectURL(objBlob)
-            const mtlurl=URL.createObjectURL(mtlBlob)
-            setObjURL(objurl)
-            setMtlURL(mtlurl)
-            console.log("Obj url is  ",objurl)
+    //         const objurl= URL.createObjectURL(objBlob)
+    //         const mtlurl=URL.createObjectURL(mtlBlob)
+    //         setObjURL(objurl)
+    //         setMtlURL(mtlurl)
+    //         console.log("Obj url is  ",objurl)
 
-            if(objurl && mtlurl){setObjReceived(true)}
-        }
+    //         if(objurl && mtlurl){setObjReceived(true)}
+    //     }
 
-    } catch (error) {
-        console.log("Error occured in object: ",error)
-    } 
+    // } catch (error) {
+    //     console.log("Error occured in object: ",error)
+    // } 
   };
 
   // A simple box for demonstration (optional)
