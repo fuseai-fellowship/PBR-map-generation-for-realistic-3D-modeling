@@ -4,6 +4,8 @@ import { FiImage } from 'react-icons/fi';
 import axios from 'axios';
 import JSZip from 'jszip';
 import { useSelector } from 'react-redux';
+import butterfly from '../Components/Assets/butterfly.jpg'
+
 
 function PBR() {
     const backendAPI=useSelector(state=>state.backendAPI)
@@ -83,30 +85,49 @@ function PBR() {
           
                 const zip = await JSZip.loadAsync(response.data)
                 console.log(zip)
-                const rough=zip.file("roughness.png");
-                const amb=zip.file("ambient_occlusion.png");
-                const norm=zip.file("normal_map.png");
-                const depth=zip.file("depth.png");
-                const original=zip.file("original_image.png")
           
                 if( zip){
-                  const roughBlob=await rough.async('blob')
-                  const ambBlob=await amb.async('blob')
-                  const normBlob=await norm.async('blob')
-                  const depthBlob=await depth.async('blob')
-                  const originalBlob=await original.async('blob')
-          
-                  const roughUrl= URL.createObjectURL(roughBlob)
-                  const ambUrl= URL.createObjectURL(ambBlob)
-                  const normUrl= URL.createObjectURL(normBlob)
-                  const depthUrl= URL.createObjectURL(depthBlob)
-                  const orgUrl= URL.createObjectURL(originalBlob)
 
-                  setAmb(ambUrl)
-                  setNorm(normUrl)
-                  setDpt(depthUrl)
-                  setRough(roughUrl)
-                  setOrg(orgUrl)
+                    const rough=zip?.file("roughness.png");
+                    if (rough){
+                        const roughBlob=await rough.async('blob')
+                        const roughUrl= URL.createObjectURL(roughBlob)
+                        setRough(roughUrl)
+                    }
+                    else setRough(butterfly);
+
+                    const amb=zip.file("ambient_occlusion.png");
+                    if(amb){
+                        const ambBlob=await amb.async('blob')
+                        const ambUrl= URL.createObjectURL(ambBlob)
+                        setAmb(ambUrl)
+                    }
+                    else setAmb(butterfly);
+
+                    const norm=zip.file("normal_map.png");
+                    if(norm){
+                        const normBlob=await norm.async('blob')
+                        const normUrl= URL.createObjectURL(normBlob)
+                        setNorm(normUrl)
+                    }
+                    else setNorm(butterfly);
+
+                    const depth=zip.file("depth.png");
+                    if ( depth){
+                        const depthBlob=await depth.async('blob')
+                        const depthUrl= URL.createObjectURL(depthBlob)
+                        setDpt(depthUrl)
+                    }
+                    else setDpt(butterfly)
+
+                    const original=zip.file("original_image.png")
+                    if ( original){
+                        const originalBlob=await original.async('blob')
+                        const orgUrl= URL.createObjectURL(originalBlob)
+                        setOrg(orgUrl)
+                    }
+                    else setOrg(selectedImage)
+               
                 }
             
         } catch (error) {
