@@ -5,7 +5,7 @@ import axios from 'axios';
 import JSZip from 'jszip';
 import { useSelector } from 'react-redux';
 import butterfly from '../Components/Assets/butterfly.jpg'
-
+import { Link } from 'react-router-dom';
 
 function PBR() {
     const backendAPI=useSelector(state=>state.backendAPI)
@@ -19,6 +19,7 @@ function PBR() {
     const [depth,setDpt]=useState(null)
     const [normal,setNorm]=useState(null)
     const [original,setOrg]=useState(null)
+    const [plyObj,setPly]=useState(null)
 
 
     const fileInputRef = useRef(null);
@@ -128,6 +129,13 @@ function PBR() {
                     // }
                     // else
                      setOrg(selectedImage)
+
+                     const plyFile=zip.file("output.ply");
+                     if(plyFile){
+                        const plyBlob=await plyFile.async('blob')
+                        // const plyurl= URL.createObjectURL(plyBlob)
+                        setPly(plyBlob)
+                     }
                
                 }
             
@@ -311,7 +319,7 @@ function PBR() {
                     </div>
 
                     <div className='flex w-5/6 text-left mx-2 my-2'>
-                        <p className='w-full  text-lg'>  Original</p>
+                        <p className='w-full  text-lg'>  Depth</p>
                     </div>
     
                 </div>
@@ -335,10 +343,15 @@ function PBR() {
                     </div>
 
                     <div className='flex w-5/6 text-left mx-2 my-2'>
-                        <p className='w-full text-lg'>  normal</p>
+                        <p className='w-full text-lg'>  Normal</p>
                     </div>
     
                 </div>
+            </div>
+            <div className='flex flex-col items-center  justify-center '>
+                <Link to={`/pointcloud`} state={{state:true,plyfile:plyObj,image:selectedImage}}>
+                <p className='px-10 py-3 rounded-xl border-2 bg-blue-400 cursor-pointer'>View Point Cloud </p>
+                </Link>
             </div>
 
         </div>

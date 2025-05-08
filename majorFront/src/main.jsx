@@ -25,7 +25,7 @@ const router= createBrowserRouter([
             },
             {
                 path:"/pointcloud",
-                element:<DepthnNormal/>
+                element:<DepthnNormal />
 
             },
             {

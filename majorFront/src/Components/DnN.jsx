@@ -1,4 +1,4 @@
-import React, { useRef, useState, Suspense, use} from 'react';
+import React, { useRef, useState, Suspense, use, useEffect} from 'react';
 import { MdOutlineFileUpload } from "react-icons/md";
 import axios from 'axios';
 import { Canvas } from '@react-three/fiber';
@@ -7,20 +7,41 @@ import {Model,PlyModel} from './Model';
 import JSZip from 'jszip';
 import { FaFileAlt } from "react-icons/fa";
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 
 function DnN() {
   const backendAPI=useSelector(state=>state.backendAPI)
   console.log("In ply viewing page with backend api : ",backendAPI)
+  const location=useLocation();
+  const props=location.state;
 
   const [selectedImage, setSelectedImage] = useState(null);
+  // const [disableDNN, setDisable]=useState(false)
 
-  const [objUrl,setObjURL]=useState(null);
-  const [mtlUrl,setMtlURL]=useState(null);
+  useEffect(()=>{
+    console.log("Props are",props)
+    if (props?.state){
+      setSelectedImage(props.image)
+      if (props.plyfile){
+        const plyurl= URL.createObjectURL(props.plyfile)
+        console.log("ply url is ",plyurl)
+        setPlyUrl(plyurl)
+        if(plyurl){setPlyReceived(true)}
+      }
+
+
+    }
+  }
+  ,[props])
+  console.log("Disable is ",props)
+
+  // const [objUrl,setObjURL]=useState(null);
+  // const [mtlUrl,setMtlURL]=useState(null);
   const [plyUrl,setPlyUrl]=useState(null);
   const [zipPly,setZip]=useState(null);
 
-  const [objReceived,setObjReceived]=useState(null);
+  // const [objReceived,setObjReceived]=useState(null);
   const [plyReceived,setPlyReceived]=useState(null)
   const fileInputRef = useRef(null);
 
@@ -153,6 +174,7 @@ function DnN() {
               ref={fileInputRef}
               className="hidden"
               onChange={handleFileChange}
+              // disabled={disableDNN}
             />
             {selectedImage && (
               <button
@@ -190,12 +212,12 @@ function DnN() {
               </div>
             )}
           </div>
-          <div 
+          <button 
             className='w-full self-center mt-1 py-2 text-xl text-slate-700 bg-blue-300 border-2 rounded-sm cursor-pointer'
             onClick={handleUpload}
           >
             Generate Point Clouds
-          </div>
+          </button>
         </div>
        {/* Right section */}
         <div className='w-full h-full flex flex-col justify-start '>
