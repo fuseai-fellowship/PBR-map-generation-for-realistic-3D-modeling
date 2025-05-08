@@ -20,6 +20,7 @@ function PBR() {
     const [normal,setNorm]=useState(null)
     const [original,setOrg]=useState(null)
     const [plyObj,setPly]=useState(null)
+    const [zipFile,setZip]=useState([])
 
 
     const fileInputRef = useRef(null);
@@ -83,7 +84,6 @@ function PBR() {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 responseType:'blob'
                 });
-          
                 const zip = await JSZip.loadAsync(response.data)
                 console.log(zip)
           
@@ -94,30 +94,37 @@ function PBR() {
                         const roughBlob=await rough.async('blob')
                         const roughUrl= URL.createObjectURL(roughBlob)
                         setRough(roughUrl)
+                        setZip(prev=>[...prev,{roughness:roughBlob}])
                     }
                     else setRough(butterfly);
+
 
                     const amb=zip.file("ambient_occlusion.png");
                     if(amb){
                         const ambBlob=await amb.async('blob')
                         const ambUrl= URL.createObjectURL(ambBlob)
                         setAmb(ambUrl)
+                        setZip(prev=>[...prev,{ambient:ambBlob}])
                     }
                     else setAmb(butterfly);
+
 
                     const norm=zip.file("normal_map.png");
                     if(norm){
                         const normBlob=await norm.async('blob')
                         const normUrl= URL.createObjectURL(normBlob)
                         setNorm(normUrl)
+                        setZip(prev=>[...prev,{normal:normBlob}])
                     }
                     else setNorm(butterfly);
+
 
                     const depth=zip.file("depth.png");
                     if ( depth){
                         const depthBlob=await depth.async('blob')
                         const depthUrl= URL.createObjectURL(depthBlob)
                         setDpt(depthUrl)
+                        setZip(prev=>[...prev,{depth:depthBlob}])
                     }
                     else setDpt(butterfly)
 
@@ -134,6 +141,7 @@ function PBR() {
                      if(plyFile){
                         const plyBlob=await plyFile.async('blob')
                         // const plyurl= URL.createObjectURL(plyBlob)
+                        // setZip(prev=>[...prev,{oject:plyBlob}])
                         setPly(plyBlob)
                      }
                
@@ -143,6 +151,33 @@ function PBR() {
          console.log("error",error)   
         }
       };
+
+      async function handleDownload(){
+        // Download the received zip file in the device
+        if (zipFile){
+            console.log("zip file is ",zipFile)
+
+            zipFile.map((items)=>{
+                Object.entries(items).map(async([key,value])=>  {
+                    console.log("hl",value)
+                        // const blob = new Blob([value], { type: 'application/zip' });
+                        // const blob=await value.async('blob')
+                        const url = window.URL.createObjectURL(value);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${key}.png`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                })
+            })
+        
+              // console.log('another res =', objUrl)
+        }
+        else alert('Generate PBR images !!!')
+
+    }
 
   return (
     <div className='w-screen h-full mt-16 p-4 mx-auto text-center font-mono '>
@@ -348,10 +383,11 @@ function PBR() {
     
                 </div>
             </div>
-            <div className='flex flex-col items-center  justify-center '>
+            <div className='flex items-center  justify-center  gap-10'>
                 <Link to={`/pointcloud`} state={{state:true,plyfile:plyObj,image:selectedImage}}>
                 <p className='px-10 py-3 rounded-xl border-2 bg-blue-400 cursor-pointer'>View Point Cloud </p>
                 </Link>
+                <p className='px-10 py-3 rounded-xl border-2 bg-blue-400 cursor-pointer' onClick={handleDownload}> Download PBR images </p>
             </div>
 
         </div>

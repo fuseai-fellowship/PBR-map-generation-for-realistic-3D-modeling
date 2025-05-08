@@ -19,11 +19,21 @@ function DnN() {
   const [selectedImage, setSelectedImage] = useState(null);
   // const [disableDNN, setDisable]=useState(false)
 
+  // const [objUrl,setObjURL]=useState(null);
+  // const [mtlUrl,setMtlURL]=useState(null);
+  const [plyUrl,setPlyUrl]=useState(null);
+  const [zipPly,setZip]=useState(null);
+
+  // const [objReceived,setObjReceived]=useState(null);
+  const [plyReceived,setPlyReceived]=useState(null)
+  const fileInputRef = useRef(null);
+
   useEffect(()=>{
     console.log("Props are",props)
     if (props?.state){
       setSelectedImage(props.image)
       if (props.plyfile){
+        setZip(props.plyfile)
         const plyurl= URL.createObjectURL(props.plyfile)
         console.log("ply url is ",plyurl)
         setPlyUrl(plyurl)
@@ -36,14 +46,7 @@ function DnN() {
   ,[props])
   console.log("Disable is ",props)
 
-  // const [objUrl,setObjURL]=useState(null);
-  // const [mtlUrl,setMtlURL]=useState(null);
-  const [plyUrl,setPlyUrl]=useState(null);
-  const [zipPly,setZip]=useState(null);
 
-  // const [objReceived,setObjReceived]=useState(null);
-  const [plyReceived,setPlyReceived]=useState(null)
-  const fileInputRef = useRef(null);
 
 
   // File handling
@@ -151,7 +154,7 @@ function DnN() {
         const a=document.createElement('a')
         a.style.display='none';
         a.href=objUrl
-        a.download='model.zip'
+        a.download='model.ply'
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(objUrl);

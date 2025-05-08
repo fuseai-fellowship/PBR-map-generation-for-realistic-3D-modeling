@@ -6,6 +6,7 @@ import {M3dCopy,LandingPage} from './Pages'
 import {DepthnNormal,PBR} from './Components'
 import { Provider } from 'react-redux'
 import {store} from './Context/store.js'
+import Sample  from './Components/sample.jsx'
 const router= createBrowserRouter([
     {
         path:"/",
@@ -30,7 +31,8 @@ const router= createBrowserRouter([
             },
             {
                 path:"/research",
-                element: <M3dCopy/>
+                // element: <M3dCopy/>
+                element:<Sample/>
             }
 
     ]

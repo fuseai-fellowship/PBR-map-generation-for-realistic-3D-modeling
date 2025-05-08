@@ -2,6 +2,10 @@ import React,{useState} from 'react'
 import {Link} from "react-router-dom"
 import butterfly1 from '../Components/Assets/butterfly1.png'
 import butterfly from '../Components/Assets/butterfly.jpg'
+import ambient from "../Components/assets/ambient.png"
+import depth from "../Components/assets/depth.png"
+import normal from "../Components/assets/normal.png"
+import roughness from "../Components/assets/roughness.png"
 
 import {useDispatch} from "react-redux"
 import {login} from '../Context/backendapi.js'
@@ -56,28 +60,30 @@ function LandingPage() {
         </div>
 
         <div className='flex flex-col px-20 justify-between'>
-            <p className='font-bold ml-5 text-2xl'>Discover Popular PBR images</p>
-            <div className='flex w-full px-6 justify-between'>
-
-                <div className='w-1/5'>
-                <img className='w-full mt-10' src={butterfly}></img>
-                <p className='text-lg font-bold text-center py-2'>PBR image of Butterfly</p>
-                </div>
+            <p className='font-bold ml-5 text-2xl'>Sample PBR images</p>
+            <div className='flex w-full px-6 mt-5 justify-between'>
             
-                <div className='w-1/5'>
-                <img className='w-full mt-10' src={butterfly}></img>
-                <p className='text-lg font-bold text-center py-2'>PBR image of Butterfly</p>
+                <div className='w-1/5 flex flex-col justify-between border-2 rounded-lg'>
+                <img className='w-full mt-10' src={depth}></img>
+                <p className='text-lg font-bold text-center py-2'>Depth Map</p>
                 </div>
 
-                <div className='w-1/5'>
-                <img className='w-full mt-10' src={butterfly}></img>
-                <p className='text-lg font-bold text-center py-2'>PBR image of Butterfly</p>
+                <div className='w-1/5 flex flex-col justify-between border-2 rounded-lg'>
+                <img className='w-full mt-10' src={normal}></img>
+                <p className='text-lg font-bold text-center py-2'>Normal Map</p>
                 </div>
 
-                <div className='w-1/5'>
-                <img className='w-full mt-10' src={butterfly}></img>
-                <p className='text-lg font-bold text-center py-2'>PBR image of Butterfly</p>
+                <div className='w-1/5 flex flex-col justify-between border-2 rounded-lg'>
+                <img className='w-full mt-10' src={roughness}></img>
+                <p className='text-lg font-bold text-center py-2'>Roughness Map</p>
                 </div>
+
+                <div className='w-1/5 flex flex-col justify-between border-2 rounded-lg'>
+                <img className='w-full mt-10' src={ambient}></img>
+                <p className='text-lg font-bold text-center py-2'>Ambient Occlusion Map</p>
+                </div>
+
+                
             </div>
             <hr className='mt-4 w-full'/>
 
