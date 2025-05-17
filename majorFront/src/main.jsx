@@ -7,6 +7,10 @@ import {DepthnNormal,PBR} from './Components'
 import { Provider } from 'react-redux'
 import {store} from './Context/store.js'
 import Sample  from './Components/sample.jsx'
+import NotFound from './Pages/NotFound.jsx'
+import NewLandingPage from './Pages/NewLandingPage.jsx'
+import AssetViewer from './Components/AssetViewer.jsx'
+import { AssetProvider } from './Components/AssetContext.jsx'
 const router= createBrowserRouter([
     {
         path:"/",
@@ -14,7 +18,7 @@ const router= createBrowserRouter([
         children:[
             {
             path:"/",
-            element:<LandingPage/>
+            element:<NewLandingPage/>
             },
             {
                 path:"/DepthnTexture",
@@ -32,10 +36,17 @@ const router= createBrowserRouter([
             {
                 path:"/research",
                 // element: <M3dCopy/>
-                element:<Sample/>
+                element:
+                <AssetProvider>
+                <AssetViewer/>
+             </AssetProvider>
             }
 
     ]
+    },
+    {
+        path:"*", 
+        element:<NotFound />
     }
 ])
 

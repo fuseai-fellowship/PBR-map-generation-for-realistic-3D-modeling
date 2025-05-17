@@ -11,7 +11,7 @@ function Navbar() {
       setIsSidebarVisible(!isSidebarVisible);
     };
   return (
-    <div className='fixed top-0 left-0 w-full bg-white h-20 flex justify-around items-center border-gray-200 border-b-2 font-mono z-10'>
+    <div className='fixed top-0 left-0 w-full px-10 bg-white h-20 flex justify-between items-center border-gray-200 border-b-2 font-mono z-10'>
         <div className='text-5xl text-[#2F2E0C] font-extrabold hidden md:flex'>
             Mapper
         </div>
@@ -40,7 +40,7 @@ function Navbar() {
         }
             M
         </div>
-        <ul className='md:flex space-x-14 text-[#2F2E0C] text-xl cursor-pointer hidden'>
+        <ul className='md:flex space-x-8 text-[#2F2E0C] text-xl items-center cursor-pointer hidden'>
         <li>
                 <Link to="/">
                 Home
@@ -49,7 +49,7 @@ function Navbar() {
             </li>
             <li>
                 <Link to="/DepthnTexture">
-                D & T
+                D&T
                 </Link>
                 
             </li>
@@ -58,15 +58,16 @@ function Navbar() {
                 Research Papers
                 </Link>
           </li>
-        </ul>
-        <div className=' flex  w-fit space-x-4 px-4 items-center '>
-            <div className='border-[#e0e0d7] border-2 bg-white px-6 py-2 rounded-sm text-[#2F2E0C] font-medium cursor-pointer hover:bg-amber-50 hover:border-[#b1b1a6]'>
+          <li className='flex gap-x-4'>
+          <div className=' border-2 bg-white px-6 py-2 rounded-sm text-[#2F2E0C] font-medium cursor-pointer hover:bg-emerald-800 hover:text-white hover:border-emerald-800'>
                 Log in
             </div>
-            <div className='border-[#AEFF6E] border-2 bg-[#AEFF6E] hover:bg-[#c3f69cf0] hover:border-[#c3f69cf0] px-6 py-2 rounded-sm text-[#2F2E0C] font-medium  cursor-pointer'>
+            <div className='bg-[#AEFF6E] hover:bg-[#99d26d]  px-6 py-2 rounded-sm text-[#2F2E0C] font-medium  cursor-pointer'>
                 Sign-up
             </div>
-        </div>
+          </li>
+          
+        </ul>
     </div>
   )
 }
