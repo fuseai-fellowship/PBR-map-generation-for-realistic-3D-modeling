@@ -3,7 +3,7 @@ import { useAssetContext } from './AssetContext';
 import { Download, Maximize2 } from 'lucide-react';
 
 const PBRImages = ({ onViewFullscreen }) => {
-  const { currentAsset } = useAssetContext();
+  const { currentAsset,objectBlob } = useAssetContext();
 
   async function handleDownload(name,blob){
     // Download the received zip file in the device
@@ -45,23 +45,28 @@ const PBRImages = ({ onViewFullscreen }) => {
               <span className="text-xs font-medium bg-gray-700 text-neutral-100 px-2 py-1 rounded-md select-none">
                 {map.type}
               </span>
-              <button 
-                onClick={() => onViewFullscreen(index)}
-                className="p-1 bg-gray-200 rounded-full transition-all cursor-pointer"
-                aria-label={`View ${map.type} map fullscreen`}
-              >
-                <Maximize2 size={14} />
-              </button>
+
+              { objectBlob && 
+               <button 
+               onClick={() => onViewFullscreen(index)}
+               className="p-1 bg-gray-200 rounded-full transition-all cursor-pointer"
+               aria-label={`View ${map.type} map fullscreen`}
+             >
+               <Maximize2 size={14} />
+             </button>
+             }
+             
             </div>
             
             <div className="p-2 flex justify-end ">
+            { objectBlob && 
               <div 
               onClick={()=>handleDownload(map.type,map.blob)}
                 className="flex items-center gap-1 py-1 px-2 bg-white hover:bg-blue-700 hover:text-white rounded text-xs transition-colors"
               >
                 <Download size={12} />
                 <span>Download</span>
-              </div>
+              </div>}
             </div>
           </div>
         </div>

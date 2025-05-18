@@ -34,7 +34,7 @@ const router= createBrowserRouter([
 
             },
             {
-                path:"/research",
+                path:"/extraction",
                 // element: <M3dCopy/>
                 element:
                 <AssetProvider>

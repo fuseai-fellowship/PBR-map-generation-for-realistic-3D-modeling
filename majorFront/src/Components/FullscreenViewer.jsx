@@ -43,7 +43,7 @@ const FullscreenViewer = ({ type, onClose }) => {
       );
     } else {
       return (
-        <div className="flex items-center justify-center p-20">
+        <div className="w-full h-full flex items-center justify-center p-20">
           <ModelViewer />
         </div>
       );
@@ -67,7 +67,7 @@ const FullscreenViewer = ({ type, onClose }) => {
     } else {
       return {
         url:URL.createObjectURL(objectBlob),
-        filename: `${currentAsset.name.toLowerCase().replace(/\s+/g, '-')}.ply`
+        filename: `model.ply`
       };
     }
   };
@@ -98,7 +98,7 @@ const FullscreenViewer = ({ type, onClose }) => {
         <span>Download</span>
       </a>
 
-      <div className="h-full w-full relative">
+      <div className='w-full h-full'>
         {getActiveContent()}
       </div>
     </motion.div>

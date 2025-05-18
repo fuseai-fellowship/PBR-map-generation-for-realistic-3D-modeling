@@ -9,7 +9,7 @@ import FullscreenViewer from './FullscreenViewer';
 import AssetInfo from './AssetInfo';
 
 const AssetViewer = () => {
-  const { currentAsset} = useAssetContext();
+  const { currentAsset,objectBlob} = useAssetContext();
   const [activeView, setActiveView] = useState(null);
   const [showFullscreen, setShowFullscreen] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -20,17 +20,17 @@ const AssetViewer = () => {
   };
 
   return (
-    <div className=" py-24 px-28 w-full bg-[#e1f8e1]">
+    <div className=" py-24 px-28 w-full bg-gradient-to-b from-[#e7f6eb] to-[#caf3d5]">
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-8"
       >
         <h1 className="text-3xl md:text-4xl font-bold text-center mb-2 text-[#1a472a]">
-          {currentAsset.name}
+PBR Map & 3D Point Cloud
         </h1>
         <p className="text-gray-600 text-center max-w-2xl mx-auto">
-          Interactive viewer with original image and PBR textures
+          Extraction & Interactive viewing
         </p>
       </motion.header>
       
@@ -44,13 +44,17 @@ const AssetViewer = () => {
           <div className="bg-white rounded-2xl p-4 shadow-lg">
             <h2 className="text-xl font-semibold mb-3 flex items-center justify-between text-[#1a472a]">
               <span>Original Image</span>
-              <button 
-                onClick={() => handleFullscreen('original')}
-                className="p-1.5 bg-[#f4f9f4] hover:bg-[#e4f0e4] rounded-full transition-colors"
-                aria-label="View fullscreen"
-              >
-                <Maximize2 size={16} className="text-[#1a472a]" />
-              </button>
+              
+              {objectBlob &&
+               <button 
+               onClick={() => handleFullscreen('original')}
+               className="p-1.5 bg-[#f4f9f4] hover:bg-[#e4f0e4] rounded-full transition-colors"
+               aria-label="View fullscreen"
+             >
+               <Maximize2 size={16} className="text-[#1a472a]" />
+             </button>
+              }
+             
             </h2>
             <div className="aspect-square relative rounded-xl">
               <OriginalImage />
@@ -68,30 +72,35 @@ const AssetViewer = () => {
           transition={{ delay: 0.1 }}
           className="lg:col-span-2 bg-white rounded-2xl overflow-hidden shadow-lg"
         >
-          <div className="relative  w-full h-auto ">
+          <div className="relative  w-full h-2/3 ">
             <ModelViewer />
+            {objectBlob && 
             <button 
               onClick={() => handleFullscreen('model')}
-              className="absolute top-4 right-4 p-2 bg-white/90 hover:bg-white rounded-full transition-colors shadow-lg"
+              className="absolute top-6 right-6 p-2 bg-gray-200 hover:bg-gray-300 rounded-full transition-colors shadow-lg"
               aria-label="View fullscreen"
             >
               <Maximize2 size={20} className="text-[#1a472a]" />
-            </button>
+            </button>}
+            {objectBlob && 
             <button 
               onClick={() => setShowInfo(!showInfo)}
-              className="absolute top-4 left-4 p-2 bg-white/90 hover:bg-white rounded-full transition-colors shadow-lg"
+              className="absolute top-6 left-6 p-2 bg-gray-200 hover:bg-gray-300 rounded-full transition-colors shadow-lg"
               aria-label="Show information"
             >
               <Info size={20} className="text-[#1a472a]" />
-            </button>
-            <a 
-              href={currentAsset.modelUrl}
-              download={`${currentAsset.name.toLowerCase().replace(/\s+/g, '-')}.glb`}
-              className="absolute bottom-4 right-4 flex items-center gap-2 py-2 px-4 bg-white text-black hover:bg-blue-700 rounded-lg transition-colors hover:text-white shadow-lg"
-            >
-              <Download size={16} />
-              <span className="text-sm font-medium">Download Model</span>
-            </a>
+            </button>}
+            {objectBlob && 
+             <a 
+             href={URL.createObjectURL(objectBlob)}
+             download={'model.ply'}
+             className="absolute bottom-8 right-8 flex items-center gap-2 py-2 px-4 bg-gray-300 text-black hover:bg-blue-700 rounded-lg transition-colors hover:text-white shadow-lg"
+           >
+             <Download size={16} />
+             <span className="text-sm font-medium">Download Model</span>
+           </a>
+           }
+           
           </div>
         </motion.div>
 

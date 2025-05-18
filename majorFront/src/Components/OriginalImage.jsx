@@ -10,10 +10,10 @@ import { useAssetContext } from './AssetContext';
 import { Download } from 'lucide-react';
 
 const OriginalImage = () => {
-  const { currentAsset ,updatePBRMapByType ,updateAllPBRMap,addBlob} = useAssetContext();
+  const { currentAsset ,updatePBRMapByType ,updateAllPBRMap,addBlob,addOriginalImage} = useAssetContext();
 
   // const backendAPI=useSelector(state=>state.backendAPI)
-  const backendAPI='https://aad8-34-105-23-20.ngrok-free.app/process'
+  const backendAPI='https://b872-104-196-153-231.ngrok-free.app/process'
     console.log("In pbr maps displaying page with backendapi : ",backendAPI)
 
     const [selectedImage, setSelectedImage] = useState(null); // for uploaded imaged
@@ -34,6 +34,8 @@ const OriginalImage = () => {
     const handleFileChange = (e) => {
       const file = e.target.files[0];
       if (file) {
+        const url=URL.createObjectURL(file)
+        addOriginalImage(url)
         setSelectedImage(file);
       }
     };
@@ -44,6 +46,8 @@ const OriginalImage = () => {
       e.stopPropagation();
       const file = e.dataTransfer.files[0];
       if (file) {
+        const url=URL.createObjectURL(file)
+        addOriginalImage(url)
         setSelectedImage(file);
       }
     };
@@ -63,10 +67,6 @@ const OriginalImage = () => {
 
     // When user clicks the Extract button
     const handleUpload = async () => {
-      // alert("Clicked")
-      // updatePBRMapByType('Albedo', {
-      //   url: 'https://media.istockphoto.com/id/1033704156/vector/loading-circle-icon-progress-loading-vector-icon-update-icon.jpg?s=612x612&w=0&k=20&c=Ap_ELUDTrZj1jRFqbqBfKipF6Y_4C8QRgwWf0NFLDw0=',
-      // });
       updateAllPBRMap('all',{url:'https://media.tenor.com/IfbOs_yh89AAAAAM/loading-buffering.gif'})
 
         if (!selectedImage) return;
@@ -82,7 +82,7 @@ const OriginalImage = () => {
                 responseType:'blob'
                 });
                 const zip = await JSZip.loadAsync(response.data)
-                console.log(zip)
+                console.log("Response is received ",zip)
           
                 if( zip){
 
@@ -91,10 +91,6 @@ const OriginalImage = () => {
                         const roughBlob=await rough.async('blob')
                         const roughUrl= URL.createObjectURL(roughBlob)
                         setRough(roughUrl)
-                        //  updatePBRMapByType('Albedo', {
-                        //     url: 'https://media.istockphoto.com/id/1033704156/vector/loading-circle-icon-progress-loading-vector-icon-update-icon.jpg?s=612x612&w=0&k=20&c=Ap_ELUDTrZj1jRFqbqBfKipF6Y_4C8QRgwWf0NFLDw0=',
-                        //   });
-
                           updatePBRMapByType('Roughness', {
                             url: roughUrl,
                             blob: roughBlob
@@ -146,24 +142,17 @@ const OriginalImage = () => {
                     }
                     else setDpt(butterfly)
 
-                    // const original=zip.file("original_image.png")
-                    // if ( original){
-                    //     const originalBlob=await original.async('blob')
-                    //     const orgUrl= URL.createObjectURL(originalBlob)
-                    //     setOrg(orgUrl)
-                    // }
-                    // else
                      setOrg(selectedImage)
 
                      const plyFile=zip.file("output.ply");
                      console.log("ply ifle is ",plyFile)
                      if(plyFile){
                         const plyBlob=await plyFile.async('blob')
+
                         console.log("Ply blob is ",plyBlob)
                         addBlob(plyBlob)
                         console.log("asset after adding ",currentAsset)
-                        // const plyurl= URL.createObjectURL(plyBlob)
-                        // setZip(prev=>[...prev,{oject:plyBlob}])
+
                         setPly(plyBlob)
                      }
                
@@ -174,32 +163,32 @@ const OriginalImage = () => {
         }
       };
 
-      async function handleDownload(){
-        // Download the received zip file in the device
-        if (zipFile){
-            console.log("zip file is ",zipFile)
+    //   async function handleDownload(){
+    //     // Download the received zip file in the device
+    //     if (zipFile){
+    //         console.log("zip file is ",zipFile)
 
-            zipFile.map((items)=>{
-                Object.entries(items).map(async([key,value])=>  {
-                    console.log("hl",value)
-                        // const blob = new Blob([value], { type: 'application/zip' });
-                        // const blob=await value.async('blob')
-                        const url = window.URL.createObjectURL(value);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `${key}.png`;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        window.URL.revokeObjectURL(url);
-                })
-            })
+    //         zipFile.map((items)=>{
+    //             Object.entries(items).map(async([key,value])=>  {
+    //                 console.log("hl",value)
+    //                     // const blob = new Blob([value], { type: 'application/zip' });
+    //                     // const blob=await value.async('blob')
+    //                     const url = window.URL.createObjectURL(value);
+    //                     const a = document.createElement('a');
+    //                     a.href = url;
+    //                     a.download = `${key}.png`;
+    //                     document.body.appendChild(a);
+    //                     a.click();
+    //                     document.body.removeChild(a);
+    //                     window.URL.revokeObjectURL(url);
+    //             })
+    //         })
         
-              // console.log('another res =', objUrl)
-        }
-        else alert('Generate PBR images !!!')
+    //           // console.log('another res =', objUrl)
+    //     }
+    //     else alert('Generate PBR images !!!')
 
-    }
+    // }
 
   return (
    <div className='w-full h-full flex flex-col justify-center '>
@@ -230,10 +219,6 @@ const OriginalImage = () => {
             X
         </button>
         )}
-
-        {/* <div className='absolute top-0 left-0 w-1/4 bg-green-300 rounded-sm p-1'>
-        Original image
-        </div> */}
 
 
         {selectedImage ? (

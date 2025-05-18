@@ -15,25 +15,29 @@ const sampleAsset = {
   pbrMaps: [
     {
       type: 'Ambient',
-      url: 'https://images.pexels.com/photos/7640027/pexels-photo-7640027.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      // url: 'https://images.pexels.com/photos/7640027/pexels-photo-7640027.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      url:'https://images.pexels.com/photos/2071882/pexels-photo-2071882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
       description: 'Base color texture',
       blob:null
     },
     {
       type: 'Normal',
-      url: 'https://images.pexels.com/photos/5022847/pexels-photo-5022847.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      // url: 'https://images.pexels.com/photos/5022847/pexels-photo-5022847.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      url:'https://images.pexels.com/photos/2071882/pexels-photo-2071882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
       description: 'Surface detail texture',
       blob:null
     },
     {
       type: 'Roughness',
-      url: 'https://images.pexels.com/photos/5022849/pexels-photo-5022849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      // url: 'https://images.pexels.com/photos/5022849/pexels-photo-5022849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      url:'https://images.pexels.com/photos/2071882/pexels-photo-2071882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
       description: 'Surface roughness texture',
       blob:null
     },
     {
       type: 'Depth',
-      url: 'https://images.pexels.com/photos/139309/pexels-photo-139309.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      // url: 'https://images.pexels.com/photos/139309/pexels-photo-139309.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      url:'https://images.pexels.com/photos/2071882/pexels-photo-2071882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
       description: 'Metal property texture',
       blob:null
     }
@@ -80,8 +84,15 @@ export const AssetProvider = ({ children }) => {
     }));
   };
 
+  const addOriginalImage=(content)=>{
+    setAsset(prev=>({
+      ...prev,
+      originalImageUrl:content
+    }))
+  }
+
   return (
-    <AssetContext.Provider value={{ currentAsset,objectBlob,addBlob,updatePBRMapByType,updateAllPBRMap }}>
+    <AssetContext.Provider value={{ currentAsset,objectBlob,addBlob,updatePBRMapByType,updateAllPBRMap,addOriginalImage }}>
       {children}
     </AssetContext.Provider>
   );
