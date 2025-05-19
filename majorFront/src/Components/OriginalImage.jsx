@@ -245,14 +245,14 @@ const OriginalImage = () => {
         <div 
         className='w-full flex justify-around text-center mt-1 py-2 text-xl text-slate-700  rounded-sm cursor-pointer'>
             <p 
-            className='bg-blue-300  border-2 px-4 rounded-sm'
+            className='bg-blue-300  border-2 px-4 rounded-sm inline-block'
             onClick={handleUpload}
             >
             Extract PBR maps
             </p>
               {selectedImage?
-              <p onClick={handleClick} className='bg-blue-300  border-2 px-4 rounded-sm'>Change Image</p>:
-              <p onClick={handleClick} className='bg-blue-300  border-2 px-4 rounded-sm'>Add Image</p>}
+              <p onClick={handleClick} className='bg-blue-300  border-2 px-4 rounded-sm inline-block'>Change Image</p>:
+              <p onClick={handleClick} className='bg-blue-300  border-2 px-4 rounded-sm inline-block'>Add Image</p>}
         </div>
    
    
