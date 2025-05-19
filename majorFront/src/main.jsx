@@ -11,6 +11,12 @@ import NotFound from './Pages/NotFound.jsx'
 import NewLandingPage from './Pages/NewLandingPage.jsx'
 import AssetViewer from './Components/AssetViewer.jsx'
 import { AssetProvider } from './Components/AssetContext.jsx'
+import Login from './Components/Login.jsx'
+import {GoogleOAuthProvider} from '@react-oauth/google';
+
+const Client_id= import.meta.env.VITE_CLIENT_ID;
+
+// console.log("Client id is ",Client_id)
 
 const router= createBrowserRouter([
     {
@@ -35,6 +41,10 @@ const router= createBrowserRouter([
 
             },
             {
+                path:'/login',
+                element:<Login/>
+            },
+            {
                 path:"/extraction",
                 // element: <M3dCopy/>
                 element:
@@ -51,9 +61,13 @@ const router= createBrowserRouter([
     }
 ])
 
+
 createRoot(document.getElementById('root')).render(
-    <Provider store={store}>
-        <RouterProvider router={router}/>
-    </Provider>
+    <GoogleOAuthProvider clientId={Client_id}>
+        <Provider store={store}>
+            <RouterProvider router={router}/>
+        </Provider>
+    </GoogleOAuthProvider>
+   
 
 )

@@ -10,13 +10,18 @@ export const apiSlice= createSlice({
     name:'api',
     initialState,
     reducers:{
-        login:(state,action)=>{
-            state.status=true,
+        login:(state)=>{
+            state.status=true
+        },
+        logout:(state)=>{
+            state.status=false
+        },
+        addBackendURL:(state,action)=>{
             state.backendAPI=action.payload
         }
     }
 
 })
-export const {login}=apiSlice.actions;
+export const {login,logout,addBackendURL}=apiSlice.actions;
 
 export default apiSlice.reducer

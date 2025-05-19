@@ -12,22 +12,11 @@ import { Download } from 'lucide-react';
 const OriginalImage = () => {
   const { currentAsset ,updatePBRMapByType ,updateAllPBRMap,addBlob,addOriginalImage} = useAssetContext();
 
-  // const backendAPI=useSelector(state=>state.backendAPI)
-  const backendAPI='https://b872-104-196-153-231.ngrok-free.app/process'
+  const backendAPI=useSelector(state=>state.backendAPI)
+  // const backendAPI='https://b872-104-196-153-231.ngrok-free.app/process'
     console.log("In pbr maps displaying page with backendapi : ",backendAPI)
 
     const [selectedImage, setSelectedImage] = useState(null); // for uploaded imaged
-    // const [responseImage, setResponseImage] = useState(null);  // for received image
-
-    const [roughness,setRough]=useState(null)
-    const [ambient,setAmb]=useState(null)
-    const [depth,setDpt]=useState(null)
-    const [normal,setNorm]=useState(null)
-    const [original,setOrg]=useState(null)
-    const [plyObj,setPly]=useState(null)
-    const [zipFile,setZip]=useState([])
-
-
     const fileInputRef = useRef(null);
   
     // When a file is selected via the hidden input
@@ -90,59 +79,59 @@ const OriginalImage = () => {
                     if (rough){
                         const roughBlob=await rough.async('blob')
                         const roughUrl= URL.createObjectURL(roughBlob)
-                        setRough(roughUrl)
+                        // setRough(roughUrl)
                           updatePBRMapByType('Roughness', {
                             url: roughUrl,
                             blob: roughBlob
                           });
 
-                        setZip(prev=>[...prev,{roughness:roughBlob}])
+                        // setZip(prev=>[...prev,{roughness:roughBlob}])
                     }
-                    else setRough(butterfly);
+                    // else setRough(butterfly);
 
 
                     const amb=zip.file("ambient_occlusion.png");
                     if(amb){
                         const ambBlob=await amb.async('blob')
                         const ambUrl= URL.createObjectURL(ambBlob)
-                        setAmb(ambUrl)
+                        // setAmb(ambUrl)
                         updatePBRMapByType('Ambient', {
                           url: ambUrl,
                           blob:ambBlob
                         });
-                        setZip(prev=>[...prev,{ambient:ambBlob}])
+                        // setZip(prev=>[...prev,{ambient:ambBlob}])
                     }
-                    else setAmb(butterfly);
+                    // else setAmb(butterfly);
 
 
                     const norm=zip.file("normal_map.png");
                     if(norm){
                         const normBlob=await norm.async('blob')
                         const normUrl= URL.createObjectURL(normBlob)
-                        setNorm(normUrl)
+                        // setNorm(normUrl)
                         updatePBRMapByType('Normal', {
                           url: normUrl,
                           blob:normBlob
                         });
-                        setZip(prev=>[...prev,{normal:normBlob}])
+                        // setZip(prev=>[...prev,{normal:normBlob}])
                     }
-                    else setNorm(butterfly);
+                    // else setNorm(butterfly);
 
 
                     const depth=zip.file("depth.png");
                     if ( depth){
                         const depthBlob=await depth.async('blob')
                         const depthUrl= URL.createObjectURL(depthBlob)
-                        setDpt(depthUrl)
+                        // setDpt(depthUrl)
                         updatePBRMapByType('Depth', {
                           url: depthUrl,
                           blob: depthBlob
                         });
-                        setZip(prev=>[...prev,{depth:depthBlob}])
+                        // setZip(prev=>[...prev,{depth:depthBlob}])
                     }
-                    else setDpt(butterfly)
+                    // else setDpt(butterfly)
 
-                     setOrg(selectedImage)
+                    //  setOrg(selectedImage)
 
                      const plyFile=zip.file("output.ply");
                      console.log("ply ifle is ",plyFile)
@@ -153,7 +142,7 @@ const OriginalImage = () => {
                         addBlob(plyBlob)
                         console.log("asset after adding ",currentAsset)
 
-                        setPly(plyBlob)
+                        // setPly(plyBlob)
                      }
                
                 }
@@ -162,33 +151,6 @@ const OriginalImage = () => {
          console.log("error",error)   
         }
       };
-
-    //   async function handleDownload(){
-    //     // Download the received zip file in the device
-    //     if (zipFile){
-    //         console.log("zip file is ",zipFile)
-
-    //         zipFile.map((items)=>{
-    //             Object.entries(items).map(async([key,value])=>  {
-    //                 console.log("hl",value)
-    //                     // const blob = new Blob([value], { type: 'application/zip' });
-    //                     // const blob=await value.async('blob')
-    //                     const url = window.URL.createObjectURL(value);
-    //                     const a = document.createElement('a');
-    //                     a.href = url;
-    //                     a.download = `${key}.png`;
-    //                     document.body.appendChild(a);
-    //                     a.click();
-    //                     document.body.removeChild(a);
-    //                     window.URL.revokeObjectURL(url);
-    //             })
-    //         })
-        
-    //           // console.log('another res =', objUrl)
-    //     }
-    //     else alert('Generate PBR images !!!')
-
-    // }
 
   return (
    <div className='w-full h-full flex flex-col justify-center '>

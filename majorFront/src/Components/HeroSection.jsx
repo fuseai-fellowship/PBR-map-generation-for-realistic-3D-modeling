@@ -1,13 +1,25 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Link} from "react-router-dom"
 import butterfly1_nobg from '../Components/assets/butterfly1_nobg.png'
+import { useDispatch } from 'react-redux';
+import {addBackendURL} from '../Context/backendapi.js'
+
 
 
 const HeroSection = () => {
-  console.log("Inside the hero section")
-  const handleClick=()=>{
-    console.log("Hello ")
-  }
+
+  const [clicked, setclick]= useState(false)
+  const [backapi,setbackapi]=useState('')
+  const dispatch=useDispatch();
+
+  const addAPI=(e)=>{
+      e.preventDefault()
+      const newAPI=backapi+'/process'
+      console.log("the value is ",newAPI)
+      dispatch(addBackendURL(newAPI))
+      setbackapi('')
+      setclick(!clicked)
+   }
   return (
     <div className="mt-8 pb-20 relative overflow-hidden bg-gradient-to-b from-white to-[#e9f5ec]">
       
@@ -27,6 +39,22 @@ const HeroSection = () => {
               Our AI-powered tool extracts and converts images into seamless texture maps, perfect for game development, 
               3D rendering, and digital design.
             </p>
+            <p className='mt-24 mb-6 underline cursor-pointer select-none' onClick={()=>setclick(!clicked)}> Try it now 
+            </p>
+            {clicked &&  
+            <form onSubmit={addAPI}>
+                <input
+                    type='text'
+                    value={backapi}
+                    onChange={(e)=>setbackapi(e.target.value)}
+                    className='border-2 rounded-sm px-2'
+                    >
+                    </input>
+                    <button type='submit' className='ml-4 px-4 cursor-pointer text-white bg-black rounded-sm' >
+                        ADD
+                    </button>
+                </form>
+                }
            
             <div className="flex flex-wrap gap-3">
             
