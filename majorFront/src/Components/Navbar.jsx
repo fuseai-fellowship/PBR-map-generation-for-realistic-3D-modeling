@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
 import {logout} from "../Context/backendapi";
 import { googleLogout } from '@react-oauth/google';
+import { IoLogOutOutline,IoLogInOutline } from "react-icons/io5";
+
 
 function Navbar() {
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
@@ -71,20 +73,24 @@ function Navbar() {
           <li>
             <div
             onClick={LogOut} 
-            className=' border-2 bg-white px-6 py-2 rounded-sm text-[#2F2E0C] font-medium cursor-pointer hover:bg-emerald-800 hover:text-white hover:border-emerald-800'>
-                Log out
+            className='flex border-2 bg-white px-6 py-2 rounded-sm items-center gap-2 text-[#2F2E0C] font-medium cursor-pointer hover:bg-emerald-800 hover:text-white hover:border-emerald-800'>
+               
+                Logout
+                <IoLogOutOutline/>
             </div>
           </li>:
           <li className='flex gap-x-4'>
             <Link to='/login'>
             <div className=' border-2 bg-white px-6 py-2 rounded-sm text-[#2F2E0C] font-medium cursor-pointer hover:bg-emerald-800 hover:text-white hover:border-emerald-800'>
-                Sign-up
+                Login
             </div>
             </Link>
          
-            {/* <div className='bg-[#AEFF6E] hover:bg-[#99d26d]  px-6 py-2 rounded-sm text-[#2F2E0C] font-medium  cursor-pointer'>
-                Sign-up
-            </div> */}
+            <Link to='/signup'>
+            <div className='bg-[#AEFF6E] hover:bg-[#99d26d] hover:border-[#99d26d] border-2 border-[#AEFF6E] px-6 py-2 rounded-sm text-[#2F2E0C] font-medium  cursor-pointer'>
+                Sign Up
+            </div>
+            </Link>
           </li>}
           
           

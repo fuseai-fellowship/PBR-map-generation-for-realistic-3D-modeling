@@ -12,6 +12,7 @@ import NewLandingPage from './Pages/NewLandingPage.jsx'
 import AssetViewer from './Components/AssetViewer.jsx'
 import { AssetProvider } from './Components/AssetContext.jsx'
 import Login from './Components/Login.jsx'
+import SignUp from './Components/SignUp.jsx'
 import {GoogleOAuthProvider} from '@react-oauth/google';
 
 const Client_id= import.meta.env.VITE_CLIENT_ID;
@@ -43,6 +44,10 @@ const router= createBrowserRouter([
             {
                 path:'/login',
                 element:<Login/>
+            },
+            {
+                path:'/signup',
+                element:<SignUp/>
             },
             {
                 path:"/extraction",

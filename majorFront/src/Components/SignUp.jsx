@@ -53,7 +53,7 @@ function Login() {
     return (
         <div className="w-full bg-green-100 mt-20 flex justify-center select-none">
             <div className="bg-white w-1/3 flex flex-col items-start text-center mt-20 mb-20 p-10 space-y-6 shadow-2xl rounded-xl">
-                <h1 className="text-2xl font-bold text-center w-full "> Welcome Back</h1>
+                <h1 className="text-2xl font-bold text-center w-full "> Create an account</h1>
                 <div
                 onClick={googleLogin}
                  className="flex items-center justify-center gap-2 w-full py-3 font-semibold border-1 border-neutral-300 rounded-lg hover:scale-105 transition-all duration-100">
@@ -73,6 +73,15 @@ function Login() {
                     onSubmit={handleSubmit(login)}
                     className=" space-y-6 w-full"
                 >
+                    <Input
+                        label="Name "
+                        type="text"
+                        className="mt-1 border-1 border-gray-400 w-full p-3 rounded-lg"
+                        placeholder="Your name"
+                        {...register("name", {
+                            required: true,
+                        })}
+                    />
                     <Input
                         label="Email "
                         type="email"
@@ -114,13 +123,13 @@ function Login() {
                     </div>
 
                     <button className="w-full py-2 text-xl bg-emerald-600 hover:bg-emerald-700 rounded-lg text-white cursor-pointer">
-                        Login
+                        Sign Up
                     </button>
                 </form>
                 <p >
-                    Don't have an account?{" "}
-                    <Link to="/signup">
-                        <span className="text-emerald-600">Signup</span>
+                    Already have an account?{" "}
+                    <Link to="/login">
+                        <span className="text-emerald-600">Login</span>
                     </Link>
                 </p>
               
