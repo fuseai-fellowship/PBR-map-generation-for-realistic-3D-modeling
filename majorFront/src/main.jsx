@@ -13,6 +13,7 @@ import AssetViewer from './Components/AssetViewer.jsx'
 import { AssetProvider } from './Components/AssetContext.jsx'
 import Login from './Components/Login.jsx'
 import SignUp from './Components/SignUp.jsx'
+import PDFviewer from './Components/PDFviewer.jsx'
 import {GoogleOAuthProvider} from '@react-oauth/google';
 
 const Client_id= import.meta.env.VITE_CLIENT_ID;
@@ -48,6 +49,10 @@ const router= createBrowserRouter([
             {
                 path:'/signup',
                 element:<SignUp/>
+            },
+            {
+                path:'/research',
+                element:<PDFviewer/>
             },
             {
                 path:"/extraction",
