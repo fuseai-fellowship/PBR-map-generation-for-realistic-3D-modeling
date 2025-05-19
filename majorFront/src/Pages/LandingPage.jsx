@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import {Link} from "react-router-dom"
-import butterfly1 from '../Components/Assets/butterfly1.png'
+import butterfly1 from '../Components/assets/butterfly1.png'
 import butterfly from '../Components/Assets/butterfly.jpg'
 import ambient from "../Components/assets/ambient.png"
 import depth from "../Components/assets/depth.png"

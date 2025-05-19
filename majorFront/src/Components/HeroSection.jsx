@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom"
-import butterfly1_nobg from '../Components/Assets/butterfly1_nobg.png'
+import butterfly1_nobg from '../Components/assets/butterfly1_nobg.png'
 
 
 const HeroSection = () => {
