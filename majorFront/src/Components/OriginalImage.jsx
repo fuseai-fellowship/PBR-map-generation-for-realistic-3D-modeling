@@ -243,7 +243,7 @@ const OriginalImage = () => {
 
 
         <div 
-        className='w-full flex justify-around text-center mt-1 py-2 text-xl text-slate-700  rounded-sm cursor-pointer'>
+        className='w-full flex justify-around text-center mt-1 py-2 text-lg text-slate-700  rounded-sm cursor-pointer'>
             <p 
             className='bg-blue-300  border-2 px-4 rounded-sm inline-block'
             onClick={handleUpload}
