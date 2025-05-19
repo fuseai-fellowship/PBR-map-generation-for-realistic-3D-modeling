@@ -4,7 +4,7 @@ import { FiImage } from 'react-icons/fi';
 import axios from 'axios';
 import JSZip from 'jszip';
 import { useSelector } from 'react-redux';
-import butterfly from '../Components/Assets/butterfly.jpg'
+import butterfly from '../Components/assets/butterfly.jpg'
 import { Link } from 'react-router-dom';
 import { useAssetContext } from './AssetContext';
 import { Download } from 'lucide-react';
