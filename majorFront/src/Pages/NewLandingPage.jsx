@@ -31,7 +31,7 @@ const NewLandingPage = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Link to='/research'>
+            <Link to='/sample'>
             <FeatureCard 
               title="AI-Driven Precision" 
               description="Generate accurate Albedo, Normal, Roughness, Metalness, and other PBR maps effortlessly." 

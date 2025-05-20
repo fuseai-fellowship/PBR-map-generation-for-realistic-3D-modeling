@@ -55,6 +55,13 @@ const router= createBrowserRouter([
                 element:<PDFviewer/>
             },
             {
+                path:'/sample',
+                element:
+                <AssetProvider>
+<Sample/>
+             </AssetProvider>
+            },
+            {
                 path:"/extraction",
                 // element: <M3dCopy/>
                 element:
