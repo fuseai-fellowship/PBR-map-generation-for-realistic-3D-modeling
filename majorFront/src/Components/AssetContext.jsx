@@ -10,7 +10,7 @@ const sampleAsset = {
   resolution: '2048x2048',
   polygonCount: 4096,
   fileFormat: 'glTF 2.0 (.glb)',
-  originalImageUrl: 'https://images.pexels.com/photos/1121123/pexels-photo-1121123.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+  originalImageUrl: null,
   modelUrl: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Sphere/glTF-Binary/Sphere.glb',
   pbrMaps: [
     {

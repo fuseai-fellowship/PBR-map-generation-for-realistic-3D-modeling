@@ -55,11 +55,11 @@ const router= createBrowserRouter([
                 element:<PDFviewer/>
             },
             {
-                path:'/sample',
+                path:'/camera',
                 element:
                 <AssetProvider>
-<Sample/>
-             </AssetProvider>
+                    <Sample/>
+                </AssetProvider>
             },
             {
                 path:"/extraction",

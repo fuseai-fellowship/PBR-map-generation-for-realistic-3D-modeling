@@ -3,6 +3,7 @@ import {Link} from "react-router-dom"
 import butterfly1_nobg from '../Components/assets/butterfly1_nobg.png'
 import { useDispatch } from 'react-redux';
 import {addBackendURL} from '../Context/backendapi.js'
+import { FaCamera } from "react-icons/fa";
 
 
 
@@ -63,11 +64,14 @@ const HeroSection = () => {
                 Try Free Demo
               </p>
              </Link>
-             
-              <p
-              className="border-[#274A2A] border-1 text-[#274A2A] bg-white hover:bg-[#e9f5ec] px-6 py-6 h-auto text-lg rounded-lg cursor-pointer">
-                View Examples
-                </p>
+             <Link 
+             to='/camera'
+             className="flex items-center gap-2 border-[#274A2A] border-1 text-[#274A2A] bg-white hover:bg-[#e9f5ec] px-6 py-6 h-auto text-lg rounded-lg cursor-pointer"
+             >
+              <p>Use Camera</p>
+                <FaCamera size={22}/>
+
+                </Link>
             </div>
           
           </div>

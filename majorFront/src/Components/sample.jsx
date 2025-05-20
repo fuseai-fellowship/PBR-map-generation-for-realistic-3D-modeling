@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 const Sample = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
+  const [extract,setExtract] =useState(false);
   const videoRef = useRef(null);
   const streamRef = useRef(null);
 
@@ -56,22 +57,6 @@ const Sample = () => {
     setIsStreaming(false);
   };
 
-  // const captureImage = () => {
-  //   if (videoRef.current) {
-  //     const canvas = document.createElement('canvas');
-  //     canvas.width = videoRef.current.videoWidth || 1280;
-  //     canvas.height = videoRef.current.videoHeight || 720;
-  //     const context = canvas.getContext('2d');
-  //     if (context) {
-  //       context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-  //       const imageUrl = canvas.toDataURL('image/jpeg');
-  //       console.log("Image url is ",imageUrl)
-  //       setCapturedImage(imageUrl);
-  //     }
-  //     stopCamera();
-  //   }
-  // };
-
   const captureImage = async () => {
     if (videoRef.current) {
       const video = videoRef.current;
@@ -86,14 +71,24 @@ const Sample = () => {
         setCapturedImage(imageDataUrl);
      
         stopCamera();
+      } 
+    }
+  };
+
+  useEffect(()=>{
+    async function extractPBR() {
+      // console.log("extract ", extract)
+      if(extract){
         // Convert base64 to Blob
-        const blob = await fetch(imageDataUrl).then(res => res.blob());
-  
+        const blob = await fetch(capturedImage).then(res => res.blob());
+         
         // Prepare form data
         const formData = new FormData();
         formData.append('image', blob, 'captured.jpg');
-
-        updateAllPBRMap('all',{url:'https://media.tenor.com/IfbOs_yh89AAAAAM/loading-buffering.gif'})
+       
+        addOriginalImage(capturedImage)
+        // updateAllPBRMap('all',{url:'https://media.tenor.com/IfbOs_yh89AAAAAM/loading-buffering.gif'})
+        updateAllPBRMap('all',{url:'https://miro.medium.com/v2/resize:fit:1400/1*jJKlUDkGzezjiFPagzvnuw.gif'})
         navigate('/extraction')
         try {
           console.log("hello ji")
@@ -105,19 +100,19 @@ const Sample = () => {
               console.log("Response is received ",zip)
         
               if( zip){
-
+       
                   const rough=zip?.file("roughness.png");
                   if (rough){
                       const roughBlob=await rough.async('blob')
                       const roughUrl= URL.createObjectURL(roughBlob)
-
+       
                         updatePBRMapByType('Roughness', {
                           url: roughUrl,
                           blob: roughBlob
                         });
                   }
-
-
+       
+       
                   const amb=zip.file("ambient_occlusion.png");
                   if(amb){
                       const ambBlob=await amb.async('blob')
@@ -127,11 +122,11 @@ const Sample = () => {
                         url: ambUrl,
                         blob:ambBlob
                       });
-
+       
                   }
-
-
-
+       
+       
+       
                   const norm=zip.file("normal_map.png");
                   if(norm){
                       const normBlob=await norm.async('blob')
@@ -141,47 +136,42 @@ const Sample = () => {
                         url: normUrl,
                         blob:normBlob
                       });
-
+       
                   }
-
-
-
+       
                   const depth=zip.file("depth.png");
                   if ( depth){
                       const depthBlob=await depth.async('blob')
                       const depthUrl= URL.createObjectURL(depthBlob)
-
+       
                       updatePBRMapByType('Depth', {
                         url: depthUrl,
                         blob: depthBlob
                       });
                   }
-   
-
+       
+       
                    const plyFile=zip.file("output.ply");
                    console.log("ply ifle is ",plyFile)
                    if(plyFile){
                       const plyBlob=await plyFile.async('blob')
-
+       
                       console.log("Ply blob is ",plyBlob)
                       addBlob(plyBlob)
                       console.log("asset after adding ",currentAsset)
-
+       
                    }
-                   
-             
               }
           
               } catch (error) {
               console.log("error",error)   
               }
-
-            }
-  
-         
+             }        
       
     }
-  };
+
+    extractPBR();
+  },[capturedImage,extract])
 
 
 
@@ -257,6 +247,13 @@ const Sample = () => {
             >
               <X className="w-5 h-5 text-red-500" />
             </motion.button>
+            <div className='flex items-center justify-center' >
+              <p 
+              onClick={()=>setExtract(true)}
+              className='bg-blue-500 text-white rounded-xl px-4 py-1 mt-2 hover:bg-blue-600 cursor-pointer'>
+                Extract PBR
+              </p>
+            </div>
           </div>
         </div>
       )}
