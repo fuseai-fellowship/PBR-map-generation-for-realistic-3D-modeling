@@ -23,6 +23,8 @@ const Sample = () => {
 
   useEffect(()=>{
     setHasMultipleCameras(currentAsset.numberOfCamera)
+    console.log(" number of cam ",hasMultipleCameras)
+    alert(hasMultipleCameras)
   },[currentAsset.numberOfCamera])
 
   const startCamera = () => {
