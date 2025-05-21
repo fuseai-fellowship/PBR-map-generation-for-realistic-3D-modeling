@@ -103,7 +103,7 @@ const MJPEGStream = () => {
 
   useEffect(() => {
     createImageLayer(webcamRef1, imageNr1, finished1, 'http://192.168.10.108:8080/?action=stream');
-    createImageLayer(webcamRef2, imageNr2, finished2, 'http://localhost:5000/video_feed');
+    // createImageLayer(webcamRef2, imageNr2, finished2, 'http://192.168.10.103:5000/video_feed');
 
     return () => {
       [finished1, finished2].forEach(finished => {
@@ -137,7 +137,21 @@ const MJPEGStream = () => {
         </div>
 
         {/* Stream 2 */}
+        {/* <div className="flex justify-center items-center bg-gray-900"> */}
         <div>
+        <p className=' text-center text-xl py-4 font-bold'>
+          Normalised Video Stream 
+        </p>
+          <div className='relative aspect-video bg-black cursor-pointer overflow-hidden rounded-lg shadow-lg'>
+      <img
+        src="http://192.168.10.103:5000/video_feed"
+        alt="Live Stream"
+        className="w-auto max-h-full rounded-lg shadow-lg"
+      />
+    </div>
+    </div>
+
+        {/* <div>
           <p className=' text-center text-xl py-4 font-bold'>
           Normalised Video Stream 
           </p>
@@ -150,8 +164,9 @@ const MJPEGStream = () => {
           {/* <div className="absolute bottom-2 right-2 bg-white bg-opacity-80 text-xs px-2 py-1 rounded"> */}
             {/* {paused ? 'Paused - Click to Resume' : 'Click to Pause'} */}
           {/* </div> */}
-        </div>
-        </div>
+        {/*</div>
+        </div> */}
+
       </div>
     </div>
   );
