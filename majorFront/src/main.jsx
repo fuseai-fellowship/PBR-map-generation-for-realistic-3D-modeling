@@ -57,22 +57,16 @@ const router= createBrowserRouter([
             },
             {
                 path:'/camera',
-                element:
-                <AssetProvider>
-                    <Sample/>
-                </AssetProvider>
+                element:<Sample/>
             },
             {
                 path:'/stream',
-                element:<MJPEGStream/>
+                element:<MJPEGStream/>  
             },
             {
                 path:"/extraction",
                 // element: <M3dCopy/>
-                element:
-                <AssetProvider>
-                <AssetViewer/>
-             </AssetProvider>
+                element: <AssetViewer/>
             }
 
     ]
@@ -85,11 +79,14 @@ const router= createBrowserRouter([
 
 
 createRoot(document.getElementById('root')).render(
+    <AssetProvider>
     <GoogleOAuthProvider clientId={Client_id}>
         <Provider store={store}>
             <RouterProvider router={router}/>
         </Provider>
     </GoogleOAuthProvider>
+    </AssetProvider>
+
    
 
 )

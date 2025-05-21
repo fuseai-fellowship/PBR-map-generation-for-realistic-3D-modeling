@@ -11,6 +11,7 @@ const sampleAsset = {
   polygonCount: 4096,
   fileFormat: 'glTF 2.0 (.glb)',
   originalImageUrl: null,
+  numberOfCamera:false,
   modelUrl: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Sphere/glTF-Binary/Sphere.glb',
   pbrMaps: [
     {
@@ -67,6 +68,13 @@ export const AssetProvider = ({ children }) => {
   const addBlob=(blob)=>{
     setBlob(blob)
   }
+  const updateNoOfCamera=(boolState)=>{
+    setAsset(prev=>({
+      ...prev,
+      numberOfCamera:boolState
+    }))
+    console.log("Number of camera has been set")
+  }
   const updatePBRMapByType = (type, newData) => {
     setAsset(prev => ({
       ...prev,
@@ -92,7 +100,7 @@ export const AssetProvider = ({ children }) => {
   }
 
   return (
-    <AssetContext.Provider value={{ currentAsset,objectBlob,addBlob,updatePBRMapByType,updateAllPBRMap,addOriginalImage }}>
+    <AssetContext.Provider value={{ currentAsset,objectBlob,addBlob,updatePBRMapByType,updateAllPBRMap,addOriginalImage,updateNoOfCamera }}>
       {children}
     </AssetContext.Provider>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+
 const MJPEGStream = () => {
   const webcamRef = useRef(null);
   const imageNr = useRef(0);
@@ -19,7 +20,9 @@ const MJPEGStream = () => {
       finished.current.push(img);
       if (!paused) createImageLayer();
     };
-    img.src = `http://192.168.10.104:8080/?action=snapshot&n=0${++imageNr.current}`;
+    // img.src = `http://192.168.10.104:8080/?action=snapshot&n=0${++imageNr.current}`;
+    // img.src='http://192.168.10.108:8080/?action=stream';
+    img.src='http://192.168.10.108:8080/?action=stream';
     if (webcamRef.current) {
       webcamRef.current.insertBefore(img, webcamRef.current.firstChild);
     }

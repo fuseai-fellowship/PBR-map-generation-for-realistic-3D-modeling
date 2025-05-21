@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect}from 'react';
 import { Link } from 'react-router-dom';
 // import Navbar from '@/components/Navbar';
 import { Navbar } from '../Components';
@@ -11,8 +11,27 @@ import ProcessStep from '../Components/ProcessStep';
 // import TestimonialsSection from '@/components/TestimonialsSection';
 // import PricingSection from '@/components/PricingSection';
 // import { Button } from '@/components/ui/button';
+import { useDispatch } from 'react-redux';
+import { useAssetContext } from '../Components/AssetContext';
 
 const NewLandingPage = () => {
+  const dispatch= useDispatch();
+  const {updateNoOfCamera}=useAssetContext;
+
+    useEffect(() => {
+      async function checkCameras() {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoInputs = devices.filter(device => device.kind === 'videoinput');
+        console.log("Video Inputs are ", videoInputs)
+        if (videoInputs.length > 1) {
+          // setHasMultipleCameras(true);
+          dispatch(updateNoOfCamera)
+        }
+
+      }
+  
+      checkCameras();
+    }, []);
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
