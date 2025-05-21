@@ -16,12 +16,12 @@ const OriginalImage = () => {
     const [extractPBR,setExtractPBR]=useState(true);
     const fileInputRef = useRef(null);
   
-    useEffect(()=>{
-      if ( currentAsset.originalImageUrl){
-        setExtractPBR()
-      }
+    // useEffect(()=>{
+    //   if (currentAsset.originalImageUrl){
+    //     setExtractPBR()
+    //   }
     
-    },[currentAsset.originalImageUrl])
+    // },[currentAsset.originalImageUrl])
     // When a file is selected via the hidden input
     const handleFileChange = (e) => {
       // console.log("original")
