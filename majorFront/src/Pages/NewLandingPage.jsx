@@ -23,6 +23,7 @@ const NewLandingPage = () => {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const videoInputs = devices.filter(device => device.kind === 'videoinput');
         console.log("Video Inputs are ", videoInputs)
+        alert("Not More")
         if (videoInputs.length > 1) {
           // setHasMultipleCameras(true);
           alert("More")
