@@ -15,6 +15,7 @@ import Login from './Components/Login.jsx'
 import SignUp from './Components/SignUp.jsx'
 import PDFviewer from './Components/PDFviewer.jsx'
 import {GoogleOAuthProvider} from '@react-oauth/google';
+import MJPEGStream from './Components/MPEGStreamer.jsx'
 
 const Client_id= import.meta.env.VITE_CLIENT_ID;
 
@@ -60,6 +61,10 @@ const router= createBrowserRouter([
                 <AssetProvider>
                     <Sample/>
                 </AssetProvider>
+            },
+            {
+                path:'/stream',
+                element:<MJPEGStream/>
             },
             {
                 path:"/extraction",
