@@ -26,6 +26,7 @@ const Sample = () => {
   },[])
 
   const startCamera = () => {
+    console.log("Multiple is ",hasMultipleCameras)
     setIsStreaming(true);
   };
 
@@ -206,6 +207,7 @@ const Sample = () => {
               className="bg-white text-gray-700 px-6 py-2 rounded-full shadow-lg hover:bg-gray-100 transition-colors w-40 text-center"
             >
               Close
+              {hasMultipleCameras?'Hello':'Hi'}
             </motion.button>
 
             {hasMultipleCameras && (
