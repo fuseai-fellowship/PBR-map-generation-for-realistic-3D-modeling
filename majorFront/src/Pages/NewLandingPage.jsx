@@ -25,6 +25,7 @@ const NewLandingPage = () => {
         console.log("Video Inputs are ", videoInputs)
         if (videoInputs.length > 1) {
           // setHasMultipleCameras(true);
+          alert("More")
           dispatch(updateNoOfCamera(true))
         }
 
