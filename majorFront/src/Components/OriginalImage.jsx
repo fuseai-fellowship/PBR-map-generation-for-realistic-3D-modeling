@@ -1,13 +1,9 @@
 import React, { useRef, useState ,useEffect} from 'react';
 import { MdOutlineFileUpload } from "react-icons/md";
-import { FiImage } from 'react-icons/fi'; 
 import axios from 'axios';
 import JSZip from 'jszip';
 import { useSelector } from 'react-redux';
-import butterfly from '../Components/assets/butterfly.jpg'
-import { Link } from 'react-router-dom';
 import { useAssetContext } from './AssetContext';
-import { Download } from 'lucide-react';
 
 const OriginalImage = () => {
   const { currentAsset ,updatePBRMapByType ,updateAllPBRMap,addBlob,addOriginalImage} = useAssetContext();

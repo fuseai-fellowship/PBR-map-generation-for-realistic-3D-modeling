@@ -23,12 +23,12 @@ const Sample = () => {
 
   useEffect(()=>{
     setHasMultipleCameras(currentAsset.numberOfCamera)
-    console.log(" number of cam ",hasMultipleCameras)
-    alert(hasMultipleCameras)
+    // console.log(" number of cam ",hasMultipleCameras)
+    // alert(hasMultipleCameras)
   },[currentAsset.numberOfCamera])
 
   const startCamera = () => {
-    console.log("Multiple is ",hasMultipleCameras)
+    // console.log("Multiple is ",hasMultipleCameras)
     setIsStreaming(true);
   };
 
@@ -217,10 +217,10 @@ const Sample = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={switchCamera}
-                className="bg-gray-800 text-white px-6 py-2 rounded-full shadow-lg hover:bg-gray-700 transition-colors w-40 text-center"
+                className="flex items-center justify-center bg-gray-800 text-white px-3 py-2 rounded-full shadow-lg hover:bg-gray-700 transition-colors w-52 text-center"
               >
-                <RefreshCcw className="w-4 h-4 inline mr-2" />
-                Switch Camera
+                <RefreshCcw className="w-4 h-4  mr-2" />
+               <p className='whitespace-nowrap'>Switch Camera</p> 
               </motion.button>
             )}
           </div>

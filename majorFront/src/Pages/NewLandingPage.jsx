@@ -1,36 +1,23 @@
 import React,{useEffect}from 'react';
 import { Link } from 'react-router-dom';
-// import Navbar from '@/components/Navbar';
 import { Navbar } from '../Components';
-// import HeroSection from '@/components/HeroSection';
 import HeroSection from '../Components/HeroSection';
-// import FeatureCard from '@/components/FeatureCard';
 import FeatureCard from '../Components/FeatureCard';
-// import ProcessStep from '@/components/ProcessStep';
 import ProcessStep from '../Components/ProcessStep';
-// import TestimonialsSection from '@/components/TestimonialsSection';
-// import PricingSection from '@/components/PricingSection';
-// import { Button } from '@/components/ui/button';
-import { useDispatch } from 'react-redux';
 import { useAssetContext } from '../Components/AssetContext';
 
 const NewLandingPage = () => {
-  const dispatch= useDispatch();
-  const {updateNoOfCamera}=useAssetContext;
+  const {updateNoOfCamera}=useAssetContext();
 
     useEffect(() => {
       async function checkCameras() {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const videoInputs = devices.filter(device => device.kind === 'videoinput');
-        console.log("Video Inputs are ", videoInputs)
+        // console.log("Video Inputs are ", videoInputs)
       
         if (videoInputs.length > 1) {
-          // setHasMultipleCameras(true);
-          alert("More")
-          dispatch(updateNoOfCamera(true))
+          updateNoOfCamera(true)
         }
-        else   alert("Not More")
-
       }
   
       checkCameras();
@@ -129,12 +116,6 @@ const NewLandingPage = () => {
           </div>
         </div>
       </section>
-      
-      {/* Testimonials Section */}
-      {/* <TestimonialsSection /> */}
-      
-      {/* Pricing Section */}
-      {/* <PricingSection /> */}
       
       {/* Call to Action */}
       <section className="py-16 bg-gradient-to-r from-mapper-primary to-mapper-dark text-white">

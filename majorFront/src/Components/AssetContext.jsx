@@ -54,27 +54,20 @@ const AssetContext = createContext();
 export const AssetProvider = ({ children }) => {
   const [currentAsset,setAsset] = useState( sampleAsset);
   const [objectBlob,setBlob]=useState(null )
-  // const addURL=(type)=>{
-  //   console.log("it reached here ")
-  //   sampleAsset.pbrMaps.forEach((items)=>{
-  //     if (items.type == type){
-  //       items.url='https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D';
-  //     }
-  //   })
-    
-  //   setAsset(sampleAsset)
-  //   console.log("\n hello",currentAsset)
-  // }
+
   const addBlob=(blob)=>{
     setBlob(blob)
   }
+
   const updateNoOfCamera=(boolState)=>{
+    console.log("In update ", boolState)
     setAsset(prev=>({
       ...prev,
       numberOfCamera:boolState
     }))
     console.log("Number of camera has been set")
   }
+
   const updatePBRMapByType = (type, newData) => {
     setAsset(prev => ({
       ...prev,
@@ -83,6 +76,7 @@ export const AssetProvider = ({ children }) => {
       )
     }));
   };
+  
   const updateAllPBRMap = (type,newData) => {
     setAsset(prev => ({
       ...prev,
