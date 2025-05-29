@@ -10,14 +10,14 @@ import { useSelector } from 'react-redux';
 const Sample = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
-  const [extract, setExtract] = useState(false);
+  // const [extract, setExtract] = useState(false);
   const [facingMode, setFacingMode] = useState('user'); // 'user' (front) or 'environment' (rear)
   const [hasMultipleCameras, setHasMultipleCameras] = useState(false);
 
   const videoRef = useRef(null);
   const streamRef = useRef(null);
 
-  const { currentAsset, updatePBRMapByType, updateAllPBRMap, addBlob, addOriginalImage } = useAssetContext();
+  const { currentAsset, updatePBRMapByType, updateAllPBRMap, addBlob, addOriginalImage ,extractPBR} = useAssetContext();
   const backendAPI = useSelector(state => state.backendAPI);
   const navigate = useNavigate();
 
@@ -104,7 +104,7 @@ const Sample = () => {
 
   useEffect(() => {
     async function extractPBR() {
-      if (extract && capturedImage) {
+      if (currentAsset.extract && capturedImage) {
         const blob = await fetch(capturedImage).then(res => res.blob());
         const formData = new FormData();
         formData.append('image', blob, 'captured.jpg');
@@ -115,6 +115,7 @@ const Sample = () => {
         });
 
         navigate('/extraction');
+        console.log(" backend api is ",backendAPI)
 
         try {
           const response = await axios.post(backendAPI, formData, {
@@ -164,7 +165,7 @@ const Sample = () => {
     }
 
     extractPBR();
-  }, [capturedImage, extract]);
+  }, [capturedImage, currentAsset.extract]);
 
   useEffect(() => {
     return () => stopCamera();
@@ -248,7 +249,8 @@ const Sample = () => {
             </motion.button>
             <div className="flex items-center justify-center">
               <p
-                onClick={() => setExtract(true)}
+                // onClick={() => setExtract(true)}
+                onClick={() => extractPBR(true)}
                 className="bg-blue-500 text-white rounded-xl px-4 py-2 mt-3 hover:bg-blue-600 cursor-pointer text-sm sm:text-base text-center"
               >
                 Extract PBR

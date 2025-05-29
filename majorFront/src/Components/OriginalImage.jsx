@@ -6,14 +6,13 @@ import { useSelector } from 'react-redux';
 import { useAssetContext } from './AssetContext';
 
 const OriginalImage = () => {
-  const { currentAsset ,updatePBRMapByType ,updateAllPBRMap,addBlob,addOriginalImage} = useAssetContext();
+  const { currentAsset ,updatePBRMapByType ,updateAllPBRMap,addBlob,addOriginalImage,extractPBR} = useAssetContext();
 
   const backendAPI=useSelector(state=>state.backendAPI)
   // const backendAPI='https://b872-104-196-153-231.ngrok-free.app/process'
     console.log("In pbr maps displaying page with backendapi : ",backendAPI)
 
     const [selectedImage, setSelectedImage] = useState(null); // for uploaded imaged
-    const [extractPBR,setExtractPBR]=useState(true);
     const fileInputRef = useRef(null);
   
     // useEffect(()=>{
@@ -22,6 +21,7 @@ const OriginalImage = () => {
     //   }
     
     // },[currentAsset.originalImageUrl])
+    
     // When a file is selected via the hidden input
     const handleFileChange = (e) => {
       // console.log("original")
@@ -60,12 +60,12 @@ const OriginalImage = () => {
 
 
     const cancelUpload=()=>{
-      setExtractPBR(true);
+      extractPBR(false)
       updateAllPBRMap('all',{url:'https://images.pexels.com/photos/2071882/pexels-photo-2071882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'})
     }
     // When user clicks the Extract button
     const handleUpload = async () => {
-      setExtractPBR(false);
+      extractPBR(true)
       // updateAllPBRMap('all',{url:'https://media.tenor.com/IfbOs_yh89AAAAAM/loading-buffering.gif'})
       updateAllPBRMap('all',{url:'https://miro.medium.com/v2/resize:fit:1400/1*jJKlUDkGzezjiFPagzvnuw.gif'})
       
@@ -189,6 +189,7 @@ const OriginalImage = () => {
             e.stopPropagation(); 
             setSelectedImage(null);
             addOriginalImage(null);
+            cancelUpload();
             }}
         >
             X
@@ -219,18 +220,18 @@ const OriginalImage = () => {
 
 
         <div 
-        className='w-full flex justify-around text-center mt-1 py-2 text-lg text-white rounded-sm cursor-pointer'>
-            {extractPBR?
-            <div className='flex justify-around'>
+        className='w-full flex justify-center text-center mt-1 py-2 text-lg text-white rounded-sm cursor-pointer'>
+            {!currentAsset.extract?
+            <div className='flex w-full justify-around '>
             <p 
-            className={`bg-blue-500 hover:bg-blue-600 ${currentAsset.originalImageUrl?'':'pointer-events-none'} border-2 px-4 rounded-sm inline-block`}
+            className={`bg-blue-500 hover:bg-blue-600 ${currentAsset.originalImageUrl?'':'pointer-events-none'} border-2 px-4 rounded-sm whitespace-nowrap`}
             onClick={handleUpload}
             >
-            Extract PBR maps
+            Extract
             </p>
             {currentAsset.originalImageUrl?
-              <p onClick={handleClick} className='bg-blue-500 hover:bg-blue-600   border-2 px-4 rounded-sm inline-block'>Change Image</p>:
-              <p onClick={handleClick} className='bg-blue-500 hover:bg-blue-600 border-2 px-4 rounded-sm inline-block'>Add Image</p>}
+              <p onClick={handleClick} className='bg-blue-500 hover:bg-blue-600   border-2 px-4 rounded-sm whitespace-nowrap'>Change Image</p>:
+              <p onClick={handleClick} className='bg-blue-500 hover:bg-blue-600 border-2 px-4 rounded-sm whitespace-nowrap'>Add Image</p>}
             </div>
             :
             <p

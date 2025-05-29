@@ -12,6 +12,7 @@ const sampleAsset = {
   fileFormat: 'glTF 2.0 (.glb)',
   originalImageUrl: null,
   numberOfCamera:false,
+  extract:false,
   modelUrl: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Sphere/glTF-Binary/Sphere.glb',
   pbrMaps: [
     {
@@ -59,6 +60,12 @@ export const AssetProvider = ({ children }) => {
     setBlob(blob)
   }
 
+  const extractPBR=(state)=>{
+    setAsset(prev=>({
+      ...prev,
+      extract:state
+    }))
+  }
   const updateNoOfCamera=(boolState)=>{
     console.log("In update ", boolState)
     setAsset(prev=>({
@@ -94,7 +101,7 @@ export const AssetProvider = ({ children }) => {
   }
 
   return (
-    <AssetContext.Provider value={{ currentAsset,objectBlob,addBlob,updatePBRMapByType,updateAllPBRMap,addOriginalImage,updateNoOfCamera }}>
+    <AssetContext.Provider value={{ currentAsset,objectBlob,addBlob,updatePBRMapByType,updateAllPBRMap,addOriginalImage,updateNoOfCamera,extractPBR }}>
       {children}
     </AssetContext.Provider>
   );
