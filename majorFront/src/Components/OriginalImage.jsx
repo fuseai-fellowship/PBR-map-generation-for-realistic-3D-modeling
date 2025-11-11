@@ -9,7 +9,7 @@ const OriginalImage = () => {
   const { currentAsset ,updatePBRMapByType ,updateAllPBRMap,addBlob,addOriginalImage,extractPBR} = useAssetContext();
 
   const backendAPI=useSelector(state=>state.backendAPI)
-  // const backendAPI='https://b872-104-196-153-231.ngrok-free.app/process'
+   //const backendAPI='https://a848a3fd31e9.ngrok-free.app'
     console.log("In pbr maps displaying page with backendapi : ",backendAPI)
 
     const [selectedImage, setSelectedImage] = useState(null); // for uploaded imaged

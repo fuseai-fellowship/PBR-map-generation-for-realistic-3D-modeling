@@ -35,7 +35,7 @@ const NewLandingPage = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">Why Choose Our PBR Texture Converter?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-              Advanced technology paired with a simple interface makes Mapper the preferred choice for professionals and beginners alike.
+              Advanced technology paired with a simple interface makes PBR Mapper the preferred choice for professionals and beginners alike.
             </p>
           </div>
           
@@ -164,8 +164,8 @@ const NewLandingPage = () => {
             <div>
               <h4 className="text-white font-medium mb-4">Contact Us</h4>
               <p className="mb-2">Have questions or feedback?</p>
-              <a href="mailto:kingyakshrestha123@gmail.com" className="text-mapper-accent hover:text-white transition-colors">
-                kingyakshrestha123@gmail.com
+              <a href="mailto:sh.niharika08@gmail.com" className="text-mapper-accent hover:text-white transition-colors">
+                sh.niharika08@gmail.com
               </a>
             </div>
           </div>

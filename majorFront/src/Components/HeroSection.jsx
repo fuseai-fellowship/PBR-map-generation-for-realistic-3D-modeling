@@ -32,13 +32,14 @@ const HeroSection = () => {
           
           <div className="space-y-6 mt-32">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800  leading-tight">
-              Generate Realistic <span className="text-[#274A2A]">Textures</span> Instantly
+              Generate Realistic <span className="text-[#274A2A]">Textures</span> Instantly.
             </h1>
             
             <p className="text-lg text-gray-600 leading-relaxed">
-              Turn any image into high-quality Physically-Based Rendering (PBR) textures with just a few clicks. 
-              Our AI-powered tool extracts and converts images into seamless texture maps, perfect for game development, 
-              3D rendering, and digital design.
+               Harness the power of artificial intelligence to convert ordinary images into rich, 
+               production-ready assets. Our intelligent processing engine analyzes texture, lighting, 
+               and detail to deliver optimized, seamless outputs—ideal for 3D rendering, product design, 
+               and creative visualization. Get studio-quality results in seconds with minimal effort.
             </p>
             <p className='mt-24 mb-6 underline cursor-pointer select-none' onClick={()=>setclick(!clicked)}> Try it now 
             </p>
@@ -64,14 +65,14 @@ const HeroSection = () => {
                 Try Free Demo
               </p>
              </Link>
-             <Link 
+             {/*<Link 
              to='/camera'
              className="flex items-center gap-2 border-[#274A2A] border-1 text-[#274A2A] bg-white hover:bg-[#e9f5ec] px-6 py-6 h-auto text-lg rounded-lg cursor-pointer"
              >
               <p>Use Camera</p>
                 <FaCamera size={22}/>
 
-                </Link>
+                </Link>*/}
             </div>
           
           </div>

@@ -27,7 +27,7 @@ function Navbar() {
         {/* Logo + Desktop Nav */}
         <div className="flex items-center justify-between w-full md:w-auto">
           <Link to="/" className="text-4xl font-extrabold text-[#2F2E0C]">
-            Mapper
+            PBR Mapper
           </Link>
 
           {/* Mobile Menu Button */}
@@ -45,7 +45,7 @@ function Navbar() {
         <ul className="hidden md:flex space-x-8 text-[#2F2E0C] text-xl items-center">
           <li><Link to="/">Home</Link></li>
           <li><Link to="/DepthnTexture">D&T</Link></li>
-          <li><Link to="/research">Research Papers</Link></li>
+          {/*<li><Link to="/research">Research Papers</Link></li>*/}
           {loggedIn ? (
             <li>
               <button
@@ -78,7 +78,7 @@ function Navbar() {
         <div className="md:hidden px-4 py-4 space-y-3 bg-white border-t border-gray-200">
           <Link to="/" className="block text-lg text-gray-900 hover:bg-gray-50 px-2 py-1 rounded" onClick={() => setIsOpen(false)}>Home</Link>
           <Link to="/DepthnTexture" className="block text-lg text-gray-900 hover:bg-gray-50 px-2 py-1 rounded" onClick={() => setIsOpen(false)}>D&T</Link>
-          <Link to="/research" className="block text-lg text-gray-900 hover:bg-gray-50 px-2 py-1 rounded" onClick={() => setIsOpen(false)}>Research Papers</Link>
+          {/*<Link to="/research" className="block text-lg text-gray-900 hover:bg-gray-50 px-2 py-1 rounded" onClick={() => setIsOpen(false)}>Research Papers</Link>*/}
 
           {loggedIn ? (
             <button

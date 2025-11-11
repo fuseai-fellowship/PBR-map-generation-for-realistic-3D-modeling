@@ -90,7 +90,7 @@ app.get("/api/ply",(req,res)=>{
 })
 
 
-app.listen(4004, () => {
+app.listen(5000, () => {
   console.log("Server running");
 });
 
